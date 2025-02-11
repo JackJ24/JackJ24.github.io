@@ -1,0 +1,26 @@
+// Coordinate System and User Events
+// Jack
+// Feb, 6th, 2025
+//Not run-to-completion, but interactive programs...
+
+// Extra for Experts:
+// - describe what you did to take this project "above and beyond"
+
+
+function setup() {
+  // runs once at the very start.
+  createCanvas(500, 500);
+}
+
+function draw() {
+  //draw loop, repeats over and over forever
+  // - target of 60 fps
+  // a new image is drawn at the bottom of the loop
+  background(220);
+  circle(200,100, 50);
+
+  fill(255, 0, 0); //red fill
+  circle(mouseX, mouseY, 30);
+  //secret calculated delay()
+  //screen updates at end of loop
+}
