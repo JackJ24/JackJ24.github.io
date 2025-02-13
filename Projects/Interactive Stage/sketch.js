@@ -7,27 +7,63 @@
 
 //setup
 function setup() {
+  
   createCanvas(windowWidth, windowHeight);
   rectMode(CENTER);
+  
 }
 
 //frames
 function draw() {
-  background(220);
+  background(200);
   
-  building();
+  
   ground();
-  
+  mountians();
+}
+
+function scene(){
+  ground();
+  background();
+
 }
 
 function ground(){
-  rectMode(CENTER);
   fill(25, 155, 0);
   rect(width / 2, height, width, height * .30);
 }
 
+function mountians(){
+  
+  fill(41, 40, 40);
+  triangle(200, 400, 0, height, 600, 800);
+
+
+  fill(0, 0, 0)
+  triangle(200, 400, 145, 500, 300, 500);
+
+  fill(41, 40, 40);
+  triangle(400, 300, 110, height, 800, 800);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// unused stuff
 function building(){
-  buildingOne(0.10);
+  buildingOne(0.0);
   buildingTwo(0.27);
   buildingThree(0.44);
 }
