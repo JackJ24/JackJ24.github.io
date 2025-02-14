@@ -36,14 +36,17 @@ function ground(){
 function mountians(){
   
   fill(41, 40, 40);
-  triangle(200, 400, 0, height, 600, 800);
+  triangle(200, 400, 0, height, 400, 800);
 
 
-  fill(0, 0, 0)
-  triangle(200, 400, 145, 500, 300, 500);
+  fill(0, 0, 0);
+  triangle(200, 400, 145, 500, 250, 500);
 
   fill(41, 40, 40);
-  triangle(400, 300, 110, height, 800, 800);
+  triangle(400, 200, 100, height, 800, 800);
+
+  fill(0, 0, 0);
+  triangle(400, 200, 295, 400, 535, 400);
 }
 
 
