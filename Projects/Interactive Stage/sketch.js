@@ -274,7 +274,7 @@ function currentState(){
         
 
       }
-   }
+}
   }
 
   //reset to allow the mouse to be pressed again
