@@ -26,7 +26,7 @@ function draw() {
   background(100);
   downLine();
   //upLine();
-  circle(mouseX, mouseY, 20);
+  
   circleFun();
 }
 
