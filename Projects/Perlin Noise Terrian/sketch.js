@@ -6,11 +6,13 @@
 // - describe what you did to take this project "above and beyond"
 
 let rectWidth = 2;
+let savedNoiseSpot = 0;
 let noiseStart = 2;
 let noiseSpeed = 0.01;
 let biggestPeak = 0;
 let peakLoc = 0;
 let flagSet = 0;
+savedNoiseSpot = noiseStart
 
 function setup() {
   frameRate(60);
@@ -33,8 +35,8 @@ function draw() {
 function generateTerrain(){
 
   biggestPeak = 0;
- peakLoc = 0;
- flagSet = 0;
+  peakLoc = 0;
+  flagSet = 0;
 
   for(let x = 0; x < width; x += rectWidth){
     let randomNum = noise(noiseStart);
@@ -52,7 +54,9 @@ function generateTerrain(){
       flagSet = height - rectHeight;
     }
   }
-  noiseStart = 2;
+  noiseStart = savedNoiseSpot + 0.01;
+  savedNoiseSpot = noiseStart;
+  
   drawFlag(peakLoc, flagSet);
 }
 
