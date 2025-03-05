@@ -54,7 +54,7 @@ function generateTerrain(){
       flagSet = height - rectHeight;
     }
   }
-  noiseStart = savedNoiseSpot + 0.01;
+  noiseStart = savedNoiseSpot + 0.1;
   savedNoiseSpot = noiseStart;
   
   drawFlag(peakLoc, flagSet);
