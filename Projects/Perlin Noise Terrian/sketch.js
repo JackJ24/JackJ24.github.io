@@ -1,9 +1,8 @@
-// Project Title
-// Your Name
-// Date
-//
-// Extra for Experts:
-// - describe what you did to take this project "above and beyond"
+// Perlin Noise Terrian
+// Jack Johnston
+// March, 5th, 2025
+
+
 
 // INT VARIABLES THAT WILL BE USED LATER
 let rectWidth = 2;
