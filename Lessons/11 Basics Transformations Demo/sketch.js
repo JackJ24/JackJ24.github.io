@@ -24,15 +24,16 @@ function draw() {
 
 
   push();
-  noFill()
+  noFill();
   angleMode(DEGREES);
   translate(200,200);
   circle(0,0,300);
 
-  let numSpokes = map(mpuseX, 0, width, 1, 250);
+  //let numSpokes = map(mpuseX, 0, width, 1, 250);
+  let numSpokes = 230;
   let spokeAngle = 360/numSpokes;
-  for(let r = 0; r <= 9; r ++){
-    rotate(1);
+  for(let r = 0; r <= numSpokes; r ++){
+    rotate(spokeAngle);
     line(0, 0, 150, 0);
   }
 
