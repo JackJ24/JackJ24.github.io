@@ -30,7 +30,7 @@ function draw() {
   circle(0,0,300);
 
   //let numSpokes = map(mpuseX, 0, width, 1, 250);
-  let numSpokes = 230;
+  let numSpokes = ;
   let spokeAngle = 360/numSpokes;
   for(let r = 0; r <= numSpokes; r ++){
     rotate(spokeAngle);
