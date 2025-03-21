@@ -6,7 +6,7 @@
 
 let singleWalker;
 let walkers = [];
-const NUM_WALKERS = 3000;
+const NUM_WALKERS = 300;
 
 
 
