@@ -22,7 +22,7 @@ function intCars(){
   for(let i = 0; i <= 20; i++){
     let e = new Vehicle(0);
     eastBound.push(e);
-    let w = new Vehicle(1)
+    let w = new Vehicle(1);
     westBound.push(w);
   }
 }
@@ -40,19 +40,47 @@ function draw() {
     rect(i, height*0.5, h, 10);
   }
 
+  checkTime();
 
 
-
-
+  
   for(let i = 0; i <= eastBound.length - 1; i++){
+    eastBound[i].action();
+  }
+  for(let i = 0; i <= westBound.length - 1; i++){
     westBound[i].action();
-    eastBound[i].action(); 
-    
+  }
+  
+
+}
+
+function mouseClicked(){
+  let e = new Vehicle(0);
+  eastBound.push(e);
+  if(keyCode === SHIFT){
+    let w = new Vehicle(1);
+    westBound.push(w);
+  }
+
+
+}
+
+let light = 0;
+let startCount;
+function keyPressed(){
+  if(keyCode === 32){
+    light = 1;
+    startCount = frameCount + 120;
   }
 
 }
 
 
+function checkTime(){
+  if(startCount  <= frameCount){
+    light = 0;
+  }
+}
 
 
 
@@ -68,7 +96,6 @@ class Vehicle{
       this.c = [random(255), random(255), random(255)];
       this.type = round(random(0,1));
       
-      console.log(this.color);
     }
     if (this.dir === 1){
       this.x = 0;
@@ -77,14 +104,15 @@ class Vehicle{
       this.c = [random(255), random(255), random(255)];
       this.type = round(random(0,1));
       
-      console.log(this.color);
     }
     
 
   }
 
   action(){
-    this.move();
+    if(light === 0){
+      this.move();
+    }
     this.display();
     this.chanceFunctions();
   }
@@ -106,13 +134,13 @@ class Vehicle{
     if (this.type === 1){
       fill(this.c[0], this.c[1], this.c[2]);
       if(this.dir === 0){
-      rect(this.x, this.y, 50, 40);
-      triangle(this.x, this.y, this.x - 20, this.y + 20, this.x, this.y + 40);
+        rect(this.x, this.y, 50, 40);
+        triangle(this.x, this.y, this.x - 20, this.y + 20, this.x, this.y + 40);
       }
       if(this.dir === 1){
         rect(this.x, this.y, 50, 40);
         triangle(this.x + 50, this.y, this.x + 70, this.y + 20, this.x + 50, this.y + 40);
-        }
+      }
     }
 
   }
@@ -135,13 +163,13 @@ class Vehicle{
   chanceFunctions(){
     for(let i = 1; i !== 4; i++){
       let chance = round(random(0, 100));
-      if(i === 1 && chance == 50){
+      if(i === 1 && chance === 50){
         this.speedUp();
       }
-      if(i === 2 && chance == 50){
+      if(i === 2 && chance === 50){
         this.speedDown();
       }
-      if(i === 3 && chance == 50){
+      if(i === 3 && chance === 50){
         this.changeColor();
       }
 
