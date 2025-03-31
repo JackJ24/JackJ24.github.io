@@ -5,6 +5,7 @@
 // Extra for Experts:
 // - describe what you did to take this project "above and beyond"
 
+//Int Variables
 let westBound = [];
 let eastBound = [];
 let car1;
@@ -12,11 +13,11 @@ let car1;
 function setup() {
   createCanvas(windowWidth, windowHeight);
   intCars();
-  car1 = new Vehicle(0);
 
   
 }
 
+//funciton that creates westbound, and eastbound cars.
 function intCars(){
 
   for(let i = 0; i <= 20; i++){
@@ -29,9 +30,13 @@ function intCars(){
 
 function draw() {
   background(180);
-  
-  
-  
+  drawRoad();
+  checkTime();
+  actionCars();
+}
+
+//creates the road
+function drawRoad(){
   fill(20, 20, 20);
   h = 20;
   rect(0, height*0.2, width, height*0.6);
@@ -40,10 +45,11 @@ function draw() {
     rect(i, height*0.5, h, 10);
   }
 
-  checkTime();
+}
 
 
-  
+//let the cars move, and do all the actions that are used with the cars
+function actionCars(){
   for(let i = 0; i <= eastBound.length - 1; i++){
     eastBound[i].action();
   }
@@ -54,6 +60,8 @@ function draw() {
 
 }
 
+// when the mouse is clicked it creates a eastbound car
+// when shift and mouse is clicked it creates a westbound car
 function mouseClicked(){
   let e = new Vehicle(0);
   eastBound.push(e);
@@ -65,17 +73,21 @@ function mouseClicked(){
 
 }
 
+//varibles for traffic light
 let light = 0;
 let startCount;
+//when space is clicked it causes cars to stop for 120 frames
 function keyPressed(){
   if(keyCode === 32){
     light = 1;
+    //stopwatch for 120 frames
     startCount = frameCount + 120;
   }
 
 }
 
 
+//checks if there has been 120 frames since the start of the light change
 function checkTime(){
   if(startCount  <= frameCount){
     light = 0;
@@ -84,11 +96,13 @@ function checkTime(){
 
 
 
-
+//the class that creates the cars
 class Vehicle{
-
+  
+  //depending on direction it will differnt have properties
   constructor(direction){
     this.dir = direction;
+    //east
     if (this.dir === 0){
       this.x = width;
       this.y = height*random(0.2, 0.45);
@@ -97,6 +111,7 @@ class Vehicle{
       this.type = round(random(0,1));
       
     }
+    //west
     if (this.dir === 1){
       this.x = 0;
       this.y = height*random(0.5, 0.75);
@@ -160,6 +175,7 @@ class Vehicle{
     }
   }
 
+  //function that has random chance to change the car speed, or color
   chanceFunctions(){
     for(let i = 1; i !== 4; i++){
       let chance = round(random(0, 100));
@@ -176,6 +192,7 @@ class Vehicle{
     }
   }
 
+  //changes the cars speed faster
   speedUp(){
     if(this.dir === 0){
       this.xSpeed += -2;
@@ -192,6 +209,7 @@ class Vehicle{
 
   }
 
+  //car slower
   speedDown(){
     if(this.dir === 0){
       this.xSpeed += 2;
@@ -208,6 +226,7 @@ class Vehicle{
 
   }
 
+  //change the color
   changeColor(){
     this.c = [random(255), random(255), random(255)];
   }
