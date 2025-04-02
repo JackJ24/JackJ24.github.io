@@ -21,10 +21,10 @@ function setup() {
 function intCars(){
 
   for(let i = 0; i <= 20; i++){
-    let e = new Vehicle(0);
-    eastBound.push(e);
-    let w = new Vehicle(1);
+    let w = new Vehicle(0);
     westBound.push(w);
+    let e = new Vehicle(1);
+    eastBound.push(e);
   }
 }
 
@@ -63,10 +63,10 @@ function actionCars(){
 // when the mouse is clicked it creates a eastbound car
 // when shift and mouse is clicked it creates a westbound car
 function mouseClicked(){
-  let e = new Vehicle(0);
+  let e = new Vehicle(1);
   eastBound.push(e);
   if(keyCode === SHIFT){
-    let w = new Vehicle(1);
+    let w = new Vehicle(0);
     westBound.push(w);
   }
 
@@ -124,6 +124,10 @@ class Vehicle{
 
   }
 
+  //class methods
+
+  //if light is red done move cars
+  //action runs display, chance functions, and move, all in one function
   action(){
     if(light === 0){
       this.move();
@@ -131,8 +135,6 @@ class Vehicle{
     this.display();
     this.chanceFunctions();
   }
-
-  //class methods
 
   //display the car or truck
   display(){
@@ -146,12 +148,14 @@ class Vehicle{
       rect(this.x , this.y - 5, 10, 5);
       rect(this.x , this.y + 20, 10, 5);
     }
+    //truck
     if (this.type === 1){
       fill(this.c[0], this.c[1], this.c[2]);
       if(this.dir === 0){
         rect(this.x, this.y, 50, 40);
         triangle(this.x, this.y, this.x - 20, this.y + 20, this.x, this.y + 40);
       }
+      //east truck
       if(this.dir === 1){
         rect(this.x, this.y, 50, 40);
         triangle(this.x + 50, this.y, this.x + 70, this.y + 20, this.x + 50, this.y + 40);
@@ -162,12 +166,14 @@ class Vehicle{
 
   //moves the car in its respective direction
   move(){
+    //west
     this.x += this.xSpeed;
     if(this.dir === 0){
       if(this.x <= width*0 - 50){
         this.x = width;
       }
     }
+    //east
     if(this.dir === 1){
       if(this.x >= width){
         this.x = width*0;
