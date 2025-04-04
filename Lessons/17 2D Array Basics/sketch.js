@@ -5,14 +5,14 @@
 // Extra for Experts:
 // - describe what you did to take this project "above and beyond"
 
-let grid = 
-[ [0, 60, 120, 180, 240],
+let grid =
+  [[0, 60, 120, 180, 240],
   [240, 180, 120, 60, 0],
   [0, 200, 0, 200, 0]
-];
+  ];
 
-let sqaureSize = 80;
-const NUM_ROWS = 3; const NUM_COLS = 5; 
+let sqaureSize = 60;
+const NUM_ROWS = 3; const NUM_COLS = 5;
 
 function setup() {
   createCanvas(NUM_COLS * sqaureSize, NUM_ROWS * sqaureSize);
@@ -21,11 +21,11 @@ function setup() {
 function renderGrid(){
   //interpret the info in the 2D array, and draw
   // a grid of colours on the screen to reflect it
-  for(let y = 0; y < NUM_ROWS; y++){
-    for(let x = 0; x < NUM_COLS; y++){
+  for (let y = 0; y < NUM_ROWS; y++) {
+    for (let x = 0; x < NUM_COLS; x++) {
       let fillColor = grid[y][x];
       fill(fillColor);
-      square(x*sqaureSize, y*sqaureSize, sqaureSize);
+      square(x * sqaureSize, y * sqaureSize, sqaureSize);
     }
   }
 }
