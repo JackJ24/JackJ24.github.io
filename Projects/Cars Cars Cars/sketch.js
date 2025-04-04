@@ -175,8 +175,8 @@ class Vehicle{
     }
     //east
     if(this.dir === 1){
-      if(this.x >= width){
-        this.x = width*0;
+      if(this.x >= width + 100){
+        this.x = width*0 - 50;
       }
     }
   }
