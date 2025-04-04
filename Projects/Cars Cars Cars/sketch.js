@@ -1,9 +1,8 @@
 // CARS CARS CARS
-// JACK
-// Date
+// JACK JOHNSTON
+// March, 28, 2025
 //
-// Extra for Experts:
-// - describe what you did to take this project "above and beyond"
+
 
 //Int Variables
 let westBound = [];
@@ -48,7 +47,7 @@ function drawRoad(){
 }
 
 
-//let the cars move, and do all the actions that are used with the cars
+//loop that lets  the cars move, and do all the actions that are used with the cars
 function actionCars(){
   for(let i = 0; i <= eastBound.length - 1; i++){
     eastBound[i].action();
@@ -102,7 +101,7 @@ class Vehicle{
   //depending on direction it will differnt have properties
   constructor(direction){
     this.dir = direction;
-    //east
+    //west
     if (this.dir === 0){
       this.x = width;
       this.y = height*random(0.2, 0.45);
@@ -111,7 +110,7 @@ class Vehicle{
       this.type = round(random(0,1));
       
     }
-    //west
+    //east
     if (this.dir === 1){
       this.x = 0;
       this.y = height*random(0.5, 0.75);
@@ -200,12 +199,14 @@ class Vehicle{
 
   //changes the cars speed faster
   speedUp(){
+    //west
     if(this.dir === 0){
       this.xSpeed += -2;
       if(this.xSpeed < -15){
         this.xSpeed = -15;
       }
     }
+    //east
     if(this.dir === 1){
       this.xSpeed += 2;
       if(this.xSpeed > 15){
@@ -217,12 +218,14 @@ class Vehicle{
 
   //car slower
   speedDown(){
+    //west
     if(this.dir === 0){
       this.xSpeed += 2;
       if(this.xSpeed > 0){
         this.xSpeed = 0;
       }
     }
+    //east
     if(this.dir === 1){
       this.xSpeed += -2;
       if(this.xSpeed < 0){
