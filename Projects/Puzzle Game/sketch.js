@@ -105,22 +105,10 @@ function randomStart(){
   }
 }
 
-let rememberData = [[], [], [], []];
+let rememberData = [];
+let rememberWhere = [];
 function overlay(){
-  for (let x = 0; x < NUM_COLS ; x++){
-    for (let y = 0; y < NUM_ROWS; y++){
-      rememberData[y][x] = gridData[y][x]; 
-      if(currentRow === x && currentCol === y){
-        gridData[currentRow][currentCol] = 100;
-      }
-      else{
-        gridData[y][x] = rememberData;
-        
-      }
-    }
-  }
-
-
+  fill(gridData[currentRow][currentCol], 255);
 }
 
 
