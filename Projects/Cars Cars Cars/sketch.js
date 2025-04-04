@@ -32,6 +32,7 @@ function draw() {
   drawRoad();
   checkTime();
   actionCars();
+  lightColour();
 }
 
 //creates the road
@@ -93,7 +94,19 @@ function checkTime(){
   }
 }
 
-
+// array used for light color
+let lightColor = [0, 255, 0];
+//function that makes a green or red circle
+function lightColour(){
+  fill(lightColor[0], lightColor[1], lightColor[2]);
+  circle(width*0.1, height*0.1, 60);
+  if(light === 1){
+    lightColor = [255, 0, 0];
+  }
+  else{
+    lightColor = [0, 255, 0];
+  }
+}
 
 //the class that creates the cars
 class Vehicle{
