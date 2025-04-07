@@ -56,6 +56,8 @@ function flip(col, row){
   }
 }
 
+let rem1 = 100;
+let rem2 = 100;
 function determineActiveSquare(){
   // An expression to run each frame to determine where the mouse currently is.
   currentRow = int(mouseY / rectHeight);
@@ -105,10 +107,17 @@ function randomStart(){
   }
 }
 
-let rememberData = [];
-let rememberWhere = [];
+remData = 0;
 function overlay(){
-  fill(gridData[currentRow][currentCol], 255);
+  if (rem1 !== currentRow || rem2 !== currentCol){
+    remData = gridData[rem1][rem2];
+    rem1 = currentRow;
+    rem2 = currentCol;
+    gridData[rem1][rem2] = remData;
+  }
+  else{
+    gridData[currentRow][currentCol] = 100;
+  }
 }
 
 
