@@ -24,21 +24,40 @@ function draw() {
   determineActiveSquare();   //figure out which tile the mouse cursor is over
   drawGrid();                //render the current game board to the screen (and the overlay)
   checkWin();
-  overlay();
+  drawOverlay();
+
   
 }
 
+let squareMode = 0;
+function keyPressed(){
+  if(keyCode === 32){
+    if(squareMode === 0){
+      squareMode = 1;
+    }
+    else{
+      squareMode = 0;
+    }
+  }
+}
 
-
+//if shift is held down it activates cheater cheater mode.
+//also checks fi square mode is on or off
 function mousePressed(){
   // cross-shaped pattern flips on a mouseclick. Boundary conditions are checked within the flip function to ensure in-bounds access for array
   flip(currentCol, currentRow);
-  // Cheater Cheater
-  if(keyIsDown(SHIFT) !== true){
+  //cross 
+  if(keyIsDown(SHIFT) !== true && squareMode === 0){
     flip(currentCol-1, currentRow);
     flip(currentCol+1, currentRow);
     flip(currentCol, currentRow-1);
     flip(currentCol, currentRow+1);
+    
+  }
+  if(keyIsDown(SHIFT) !== true && squareMode === 1){
+    flip(currentCol+1, currentRow-1);
+    flip(currentCol+1, currentRow);
+    flip(currentCol, currentRow-1);
     
   }
   
@@ -56,8 +75,7 @@ function flip(col, row){
   }
 }
 
-let rem1 = 100;
-let rem2 = 100;
+
 function determineActiveSquare(){
   // An expression to run each frame to determine where the mouse currently is.
   currentRow = int(mouseY / rectHeight);
@@ -70,13 +88,16 @@ function drawGrid(){
   // Render a grid of squares - fill color set according to data stored in the 2D array
   for (let x = 0; x < NUM_COLS ; x++){
     for (let y = 0; y < NUM_ROWS; y++){
-      fill(gridData[y][x]); 
+      fill(gridData[y][x]);
       rect(x*rectWidth, y*rectHeight, rectWidth, rectHeight);
     }
   }
 }
 
+//int variable
 let notGood = 0;
+
+//checks to see if all the squares are black, and display the win message
 function checkWin(){
   for (let x = 0; x < NUM_COLS ; x++){
     for (let y = 0; y < NUM_ROWS; y++){
@@ -97,6 +118,7 @@ function checkWin(){
   notGood = 0;
 }
 
+//randomizes the squaures at the start of the game
 function randomStart(){
   for (let x = 0; x < NUM_COLS ; x++){
     for (let y = 0; y < NUM_ROWS; y++){
@@ -107,16 +129,35 @@ function randomStart(){
   }
 }
 
-remData = 0;
-function overlay(){
-  if (rem1 !== currentRow || rem2 !== currentCol){
-    remData = gridData[rem1][rem2];
-    rem1 = currentRow;
-    rem2 = currentCol;
-    gridData[rem1][rem2] = remData;
+//this creates the green overlay depending on if its a cross or square
+function drawOverlay(){
+  //cross
+  if(squareMode === 0){
+    overlay(currentCol, currentRow);
+    overlay(currentCol-1, currentRow);
+    overlay(currentCol+1, currentRow);
+    overlay(currentCol, currentRow-1);
+    overlay(currentCol, currentRow+1);
   }
+  //square
   else{
-    gridData[currentRow][currentCol] = 100;
+    overlay(currentCol, currentRow);
+    overlay(currentCol+1, currentRow-1);
+    overlay(currentCol+1, currentRow);
+    overlay(currentCol, currentRow-1);
+
+  }
+  
+
+}
+
+//creates the col, and row, put in to be green
+function overlay(col, row){
+  if(col >= 0 && row >= 0){
+    if(row <= 4 && col <= 5){
+      fill(0, 300, 0, 80);
+      rect(col*rectWidth, row*rectHeight, rectWidth, rectHeight);
+    }
   }
 }
 
