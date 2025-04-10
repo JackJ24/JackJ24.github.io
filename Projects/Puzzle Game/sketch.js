@@ -23,13 +23,15 @@ function draw() {
   background(220);
   determineActiveSquare();   //figure out which tile the mouse cursor is over
   drawGrid();                //render the current game board to the screen (and the overlay)
-  checkWin();
-  drawOverlay();
+  checkWin();     // see if player wins
+  drawOverlay(); // draw the green overlay of what you are clicking
 
   
 }
 
 let squareMode = 0;
+//when space is pressed it results in the 
+//click mode changing to either sqaure or cross
 function keyPressed(){
   if(keyCode === 32){
     if(squareMode === 0){
@@ -54,6 +56,7 @@ function mousePressed(){
     flip(currentCol, currentRow+1);
     
   }
+  //square
   if(keyIsDown(SHIFT) !== true && squareMode === 1){
     flip(currentCol+1, currentRow-1);
     flip(currentCol+1, currentRow);
@@ -99,6 +102,7 @@ let notGood = 0;
 
 //checks to see if all the squares are black, and display the win message
 function checkWin(){
+  //player has not won 
   for (let x = 0; x < NUM_COLS ; x++){
     for (let y = 0; y < NUM_ROWS; y++){
       checkValue = gridData[y][x];
@@ -108,14 +112,17 @@ function checkWin(){
 
     }
   }
-  
+  // player wins
   if(notGood === 0){
     fill(0, 0, 255);
     textSize(height/10);
     text("YOU WIN", width*0.3, height*0.5);
 
   }
-  notGood = 0;
+  else{
+    notGood = 0;
+  }
+  
 }
 
 //randomizes the squaures at the start of the game
