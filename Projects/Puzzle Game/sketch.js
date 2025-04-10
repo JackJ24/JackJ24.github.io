@@ -1,4 +1,6 @@
-//Insert your Comment Header here.
+//Puzzle Game
+//Jack Johnston
+//April 11th, 2025
 
 let NUM_ROWS = 4;
 let NUM_COLS = 5;
