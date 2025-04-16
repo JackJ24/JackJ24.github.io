@@ -42,6 +42,11 @@ function swap(x1, y1, x2, y2){
 }
 
 function keyPressed(){
+
+  if(keyCode === 32){
+    newLevel();
+  }
+
   //try a single action per key press
 
   //UP
@@ -155,7 +160,15 @@ function randomStart(){
     }
 
   }
-  level
+
+  //player
+  playerX = round(random(0, 4));
+  playerY = round(random(0, 4));
+  level[playerY][playerX] = 2;
+
+  //star
+  level[round(random(0, 4))][round(random(0, 4))] = 3;
+
 }
 
 function setup() {
@@ -164,9 +177,19 @@ function setup() {
   randomStart();
 }
 
+let timer = 0;
+function newLevel(){ 
+  randomStart();
+  win = 0;
+}
+
 function draw() {
   background(220);
   renderBoard();
   checkWin();
+  
+
+
+  
 
 }
