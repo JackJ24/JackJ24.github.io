@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://edgue2jft32j"]
+
+[ext_resource type="Texture2D" uid="uid://dq1np6jl67igq" path="res://Assets/Male_Spritesheet.png" id="1_aup2l"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_affyg"]
+size = Vector2(16, 16)
+
+[node name="Player" type="CharacterBody2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_aup2l")
+centered = false
+offset = Vector2(0, -4)
+hframes = 3
+vframes = 3
+frame = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(8, 8)
+shape = SubResource("RectangleShape2D_affyg")

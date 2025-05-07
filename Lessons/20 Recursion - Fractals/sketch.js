@@ -45,7 +45,7 @@ function circleFractal(x, y, d){
     circle(x,y,d);
     //recursive calls
     circleFractal(x-d/2, y, d/2);
-    circleFractal(x+d/2, y, d/2);
+    //circleFractal(x+d/2, y, d/2);
     circleFractal(x, y-d/2, d/2);
     circleFractal(x, y+d/2, d/2);
   }

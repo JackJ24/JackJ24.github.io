@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://dey83sc44og2t"]
+
+[ext_resource type="Script" path="res://player.gd" id="1_fk1yv"]
+[ext_resource type="Texture2D" uid="uid://dauf1i2swdyoa" path="res://PixelSpaceRage/256px/PlayerRed_Frame_01_png_processed.png" id="1_nifxa"]
+
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_fk1yv")
+
+[node name="PlayerImage" type="Sprite2D" parent="."]
+texture = ExtResource("1_nifxa")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+scale = Vector2(2.83859, 3.06716)
+polygon = PackedVector2Array(0.352287, -9.455, 1.05686, -8.47689, 2.46601, -5.54258, 3.52287, -3.26034, 3.87516, -2.28224, 6.34117, -0.978103, 7.04575, 1.63017, 9.86405, 3.91241, 9.15947, 6.84672, 5.98888, 6.19465, 4.57974, 9.12896, 1.76144, 8.15086, -2.11372, 8.15086, -4.22745, 9.455, -5.98888, 7.49879, -4.57974, 6.19465, -8.80718, 6.84672, -9.86405, 3.91241, -7.04575, 1.30414, -7.04575, -1.30414, -3.87516, -2.60827, -0.352287, -10.1071)

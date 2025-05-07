@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://dmfuedlj2u7a5"]
+
+[ext_resource type="PackedScene" uid="uid://dey83sc44og2t" path="res://player.tscn" id="1_1wyqm"]
+[ext_resource type="Texture2D" uid="uid://dvxqlj15ab73g" path="res://PixelSpaceRage/PixelBackgroundSeamless.png" id="1_wqok0"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qskew"]
+size = Vector2(76, 67.8094)
+
+[node name="Level" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(551, 364)
+scale = Vector2(5.23221, 3.14296)
+texture = ExtResource("1_wqok0")
+
+[node name="Player" parent="." instance=ExtResource("1_1wyqm")]
+position = Vector2(481, 273)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(-28, 364.5)
+scale = Vector2(1, 11.96)
+shape = SubResource("RectangleShape2D_qskew")
