@@ -1,6 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://7rb6p20bdxnv"]
+[gd_scene load_steps=9 format=3 uid="uid://7rb6p20bdxnv"]
 
-[ext_resource type="Script" path="res://Player.gd" id="1_qyq0o"]
+[ext_resource type="Script" uid="uid://deedu0habkhgw" path="res://Player.gd" id="1_qyq0o"]
+[ext_resource type="Script" uid="uid://rc3om4o2656y" path="res://HealthBar.gd" id="2_qn1rc"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_0q074"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -51,6 +52,28 @@ transform = Transform3D(0.01, 0, 0, 0, 0.01, 0, 0, 0, 0.117435, 0.000521183, 0.0
 mesh = SubResource("BoxMesh_hhb31")
 
 [node name="CSGBox3D" type="CSGBox3D" parent="."]
-transform = Transform3D(0.888734, 0, 0, 0, 1, 0, 0, 0, 1.75415, 0.275318, -0.101413, 0.183628)
+transform = Transform3D(0.888734, 0, 0, 0, 1, 0, 0, 0, 1.75415, -1.66046, -0.101413, 0.00841653)
 use_collision = true
-size = Vector3(6.44092, 0.263794, 2.28296)
+size = Vector3(18.5353, 0.263794, 6.9057)
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 268.0
+offset_bottom = 140.0
+
+[node name="TextEdit" type="TextEdit" parent="UI"]
+layout_mode = 0
+offset_left = 3.0
+offset_top = 4.0
+offset_right = 461.0
+offset_bottom = 151.0
+
+[node name="ColorRect" type="ColorRect" parent="UI"]
+layout_mode = 0
+offset_left = 15.0
+offset_top = 565.0
+offset_right = 420.0
+offset_bottom = 605.0
+color = Color(0.8, 0, 0, 1)
+script = ExtResource("2_qn1rc")

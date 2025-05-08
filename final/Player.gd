@@ -29,7 +29,7 @@ func _physics_process(delta):
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 		velocity.z = move_toward(velocity.z, 0, SPEED)
 		
-	RotateChar():
+	RotateChar()
 	
 	move_and_slide()
 	
@@ -38,6 +38,3 @@ func RotateChar():
 		rotate_y(0.05)
 	if Input.is_key_pressed(KEY_RIGHT):
 		rotate_y(-0.05)
-
-func
-
