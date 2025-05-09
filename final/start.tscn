@@ -1,7 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://7rb6p20bdxnv"]
+[gd_scene load_steps=13 format=3 uid="uid://7rb6p20bdxnv"]
 
 [ext_resource type="Script" uid="uid://deedu0habkhgw" path="res://Player.gd" id="1_qyq0o"]
-[ext_resource type="Script" uid="uid://rc3om4o2656y" path="res://HealthBar.gd" id="2_qn1rc"]
+[ext_resource type="Script" uid="uid://ds35scwunchsd" path="res://TestCol.gd" id="2_qn1rc"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_0q074"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -21,6 +21,16 @@ glow_enabled = true
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ae80w"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_hhb31"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_1n0d2"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y5hus"]
+albedo_color = Color(0.465805, 0.00509489, 0.137261, 1)
+
+[sub_resource type="PrismMesh" id="PrismMesh_oiuna"]
+material = SubResource("StandardMaterial3D_y5hus")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ots34"]
 
 [node name="Start" type="Node3D"]
 
@@ -51,29 +61,31 @@ shape = SubResource("CapsuleShape3D_ae80w")
 transform = Transform3D(0.01, 0, 0, 0, 0.01, 0, 0, 0, 0.117435, 0.000521183, 0.0611124, -0.0766802)
 mesh = SubResource("BoxMesh_hhb31")
 
+[node name="HealthBar" type="ProgressBar" parent="Player"]
+material = SubResource("CanvasItemMaterial_1n0d2")
+offset_left = 22.0
+offset_top = 554.0
+offset_right = 320.0
+offset_bottom = 600.0
+value = 100.0
+
+[node name="Area3D" type="Area3D" parent="Player"]
+script = ExtResource("2_qn1rc")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player/Area3D"]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_ae80w")
+
 [node name="CSGBox3D" type="CSGBox3D" parent="."]
 transform = Transform3D(0.888734, 0, 0, 0, 1, 0, 0, 0, 1.75415, -1.66046, -0.101413, 0.00841653)
 use_collision = true
 size = Vector3(18.5353, 0.263794, 6.9057)
 
-[node name="UI" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 268.0
-offset_bottom = 140.0
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.508153, -0.00923818, 0, 0.0124279, 0.377732, 0, 0, 0, 0.414592, -2.11494, 0.182317, -2.69041)
+mesh = SubResource("PrismMesh_oiuna")
 
-[node name="TextEdit" type="TextEdit" parent="UI"]
-layout_mode = 0
-offset_left = 3.0
-offset_top = 4.0
-offset_right = 461.0
-offset_bottom = 151.0
+[node name="Area3D" type="Area3D" parent="MeshInstance3D"]
 
-[node name="ColorRect" type="ColorRect" parent="UI"]
-layout_mode = 0
-offset_left = 15.0
-offset_top = 565.0
-offset_right = 420.0
-offset_bottom = 605.0
-color = Color(0.8, 0, 0, 1)
-script = ExtResource("2_qn1rc")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/Area3D"]
+shape = SubResource("BoxShape3D_ots34")
