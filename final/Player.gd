@@ -2,7 +2,7 @@ extends CharacterBody3D
 
 const MAX_HEALTH = 100
 var health = MAX_HEALTH
-const SPEED = 2.0
+var SPEED = 2.0
 const JUMP_VELOCITY = 4.5
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
@@ -11,9 +11,11 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 ##draw
 func _physics_process(delta):
+	
 	set_health_bar()
 	movement(delta)
 	RotateChar()
+
 	move_and_slide()
 	
 	
@@ -45,10 +47,15 @@ func RotateChar():
 		rotate_y(0.05)
 	if Input.is_key_pressed(KEY_RIGHT):
 		rotate_y(-0.05)
-		
 func int_health_bar():
 	$HealthBar.max_value = MAX_HEALTH
 	$HealthBar.value = health
 	
 func set_health_bar():
 	$HealthBar.value = health
+
+# 
+func _on_area_3d_area_entered(area):
+	health = health - 10
+	pass # Replace with function body.
+	

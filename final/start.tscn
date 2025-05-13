@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://7rb6p20bdxnv"]
+[gd_scene load_steps=14 format=3 uid="uid://7rb6p20bdxnv"]
 
 [ext_resource type="Script" uid="uid://deedu0habkhgw" path="res://Player.gd" id="1_qyq0o"]
 [ext_resource type="Script" uid="uid://ds35scwunchsd" path="res://TestCol.gd" id="2_qn1rc"]
@@ -22,7 +22,10 @@ glow_enabled = true
 
 [sub_resource type="BoxMesh" id="BoxMesh_hhb31"]
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_1n0d2"]
+[sub_resource type="Theme" id="Theme_qn1rc"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1n0d2"]
+bg_color = Color(0.870387, 2.88785e-07, 1.2514e-06, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y5hus"]
 albedo_color = Color(0.465805, 0.00509489, 0.137261, 1)
@@ -62,15 +65,15 @@ transform = Transform3D(0.01, 0, 0, 0, 0.01, 0, 0, 0, 0.117435, 0.000521183, 0.0
 mesh = SubResource("BoxMesh_hhb31")
 
 [node name="HealthBar" type="ProgressBar" parent="Player"]
-material = SubResource("CanvasItemMaterial_1n0d2")
 offset_left = 22.0
 offset_top = 554.0
 offset_right = 320.0
 offset_bottom = 600.0
+theme = SubResource("Theme_qn1rc")
+theme_override_styles/fill = SubResource("StyleBoxFlat_1n0d2")
 value = 100.0
 
 [node name="Area3D" type="Area3D" parent="Player"]
-script = ExtResource("2_qn1rc")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Player/Area3D"]
 transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
@@ -86,6 +89,9 @@ transform = Transform3D(0.508153, -0.00923818, 0, 0.0124279, 0.377732, 0, 0, 0, 
 mesh = SubResource("PrismMesh_oiuna")
 
 [node name="Area3D" type="Area3D" parent="MeshInstance3D"]
+script = ExtResource("2_qn1rc")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/Area3D"]
 shape = SubResource("BoxShape3D_ots34")
+
+[connection signal="area_entered" from="MeshInstance3D/Area3D" to="Player" method="_on_area_3d_area_entered"]
