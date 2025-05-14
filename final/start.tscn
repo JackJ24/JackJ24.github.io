@@ -79,6 +79,13 @@ value = 100.0
 transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
 shape = SubResource("CapsuleShape3D_ae80w")
 
+[node name="Node" type="Node" parent="Player"]
+
+[node name="roll_window" type="Timer" parent="Player/Node"]
+process_callback = 0
+wait_time = 0.5
+one_shot = true
+
 [node name="CSGBox3D" type="CSGBox3D" parent="."]
 transform = Transform3D(0.888734, 0, 0, 0, 1, 0, 0, 0, 1.75415, -1.66046, -0.101413, 0.00841653)
 use_collision = true
