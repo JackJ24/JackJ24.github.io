@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://7rb6p20bdxnv"]
+[gd_scene load_steps=18 format=3 uid="uid://7rb6p20bdxnv"]
 
 [ext_resource type="Script" uid="uid://deedu0habkhgw" path="res://Player.gd" id="1_qyq0o"]
 [ext_resource type="Script" uid="uid://ds35scwunchsd" path="res://TestCol.gd" id="2_qn1rc"]
@@ -27,6 +27,23 @@ glow_enabled = true
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1n0d2"]
 bg_color = Color(0.870387, 2.88785e-07, 1.2514e-06, 1)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_y5hus"]
+
+[sub_resource type="GDScript" id="GDScript_qn1rc"]
+script/source = "extends ShapeCast3D
+var can_attack = true
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	pass
+"
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y5hus"]
 albedo_color = Color(0.465805, 0.00509489, 0.137261, 1)
 
@@ -34,6 +51,10 @@ albedo_color = Color(0.465805, 0.00509489, 0.137261, 1)
 material = SubResource("StandardMaterial3D_y5hus")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ots34"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_1n0d2"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_y5hus"]
 
 [node name="Start" type="Node3D"]
 
@@ -73,6 +94,12 @@ theme = SubResource("Theme_qn1rc")
 theme_override_styles/fill = SubResource("StyleBoxFlat_1n0d2")
 value = 100.0
 
+[node name="EnemyHealth" type="ProgressBar" parent="Player"]
+offset_left = 58.0
+offset_top = 37.0
+offset_right = 1086.0
+offset_bottom = 78.0
+
 [node name="Area3D" type="Area3D" parent="Player"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Player/Area3D"]
@@ -86,8 +113,17 @@ process_callback = 0
 wait_time = 0.5
 one_shot = true
 
+[node name="Hitbox" type="ShapeCast3D" parent="Player"]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0.0462091, 0.542812, -0.602672)
+shape = SubResource("BoxShape3D_y5hus")
+collide_with_areas = true
+script = SubResource("GDScript_qn1rc")
+
+[node name="attack_cooldown" type="Timer" parent="Player/Hitbox"]
+one_shot = true
+
 [node name="CSGBox3D" type="CSGBox3D" parent="."]
-transform = Transform3D(0.888734, 0, 0, 0, 1, 0, 0, 0, 1.75415, -1.66046, -0.101413, 0.00841653)
+transform = Transform3D(1.79229, 0, 0, 0, 1, 0, 0, 0, 3.36871, -1.66046, -0.101413, 0.00841653)
 use_collision = true
 size = Vector3(18.5353, 0.263794, 6.9057)
 
@@ -100,5 +136,14 @@ script = ExtResource("2_qn1rc")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/Area3D"]
 shape = SubResource("BoxShape3D_ots34")
+
+[node name="TestEnemy" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -2.12307, 0.44761, 0)
+mesh = SubResource("CapsuleMesh_1n0d2")
+
+[node name="Area3D" type="Area3D" parent="TestEnemy"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TestEnemy/Area3D"]
+shape = SubResource("CapsuleShape3D_y5hus")
 
 [connection signal="area_entered" from="MeshInstance3D/Area3D" to="Player" method="_on_area_3d_area_entered"]
