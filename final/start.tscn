@@ -1,7 +1,7 @@
-[gd_scene load_steps=18 format=3 uid="uid://7rb6p20bdxnv"]
+[gd_scene load_steps=21 format=3 uid="uid://7rb6p20bdxnv"]
 
 [ext_resource type="Script" uid="uid://deedu0habkhgw" path="res://Player.gd" id="1_qyq0o"]
-[ext_resource type="Script" uid="uid://ds35scwunchsd" path="res://TestCol.gd" id="2_qn1rc"]
+[ext_resource type="Script" uid="uid://bg46yd6cua01x" path="res://test_enemy_script.gd" id="2_qn1rc"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_0q074"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -19,8 +19,6 @@ glow_enabled = true
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_n2rry"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ae80w"]
-
-[sub_resource type="BoxMesh" id="BoxMesh_hhb31"]
 
 [sub_resource type="Theme" id="Theme_qn1rc"]
 
@@ -50,11 +48,33 @@ albedo_color = Color(0.465805, 0.00509489, 0.137261, 1)
 [sub_resource type="PrismMesh" id="PrismMesh_oiuna"]
 material = SubResource("StandardMaterial3D_y5hus")
 
+[sub_resource type="GDScript" id="GDScript_1n0d2"]
+script/source = "extends Area3D
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	pass
+	
+"
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_ots34"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_1n0d2"]
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_y5hus"]
+[sub_resource type="Theme" id="Theme_1n0d2"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y5hus"]
+bg_color = Color(0.870387, 2.88785e-07, 1.2514e-06, 1)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_oiuna"]
+
+[sub_resource type="Theme" id="Theme_y5hus"]
 
 [node name="Start" type="Node3D"]
 
@@ -81,10 +101,6 @@ transform = Transform3D(10, 0, 0, 0, 9.91619, 1.29194, 0, -1.29194, 9.91619, 1.4
 transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
 shape = SubResource("CapsuleShape3D_ae80w")
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="Player"]
-transform = Transform3D(0.01, 0, 0, 0, 0.01, 0, 0, 0, 0.117435, 0.000521183, 0.0611124, -0.0766802)
-mesh = SubResource("BoxMesh_hhb31")
-
 [node name="HealthBar" type="ProgressBar" parent="Player"]
 offset_left = 22.0
 offset_top = 554.0
@@ -93,12 +109,6 @@ offset_bottom = 600.0
 theme = SubResource("Theme_qn1rc")
 theme_override_styles/fill = SubResource("StyleBoxFlat_1n0d2")
 value = 100.0
-
-[node name="EnemyHealth" type="ProgressBar" parent="Player"]
-offset_left = 58.0
-offset_top = 37.0
-offset_right = 1086.0
-offset_bottom = 78.0
 
 [node name="Area3D" type="Area3D" parent="Player"]
 
@@ -113,10 +123,11 @@ process_callback = 0
 wait_time = 0.5
 one_shot = true
 
-[node name="Hitbox" type="ShapeCast3D" parent="Player"]
+[node name="Hitbox" type="ShapeCast3D" parent="Player" groups=["AttackHitbox"]]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0.0462091, 0.542812, -0.602672)
 shape = SubResource("BoxShape3D_y5hus")
 collide_with_areas = true
+collide_with_bodies = false
 script = SubResource("GDScript_qn1rc")
 
 [node name="attack_cooldown" type="Timer" parent="Player/Hitbox"]
@@ -132,18 +143,40 @@ transform = Transform3D(0.508153, -0.00923818, 0, 0.0124279, 0.377732, 0, 0, 0, 
 mesh = SubResource("PrismMesh_oiuna")
 
 [node name="Area3D" type="Area3D" parent="MeshInstance3D"]
-script = ExtResource("2_qn1rc")
+script = SubResource("GDScript_1n0d2")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/Area3D"]
 shape = SubResource("BoxShape3D_ots34")
 
 [node name="TestEnemy" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -2.12307, 0.44761, 0)
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -2.09871, 0.413155, 0)
 mesh = SubResource("CapsuleMesh_1n0d2")
 
 [node name="Area3D" type="Area3D" parent="TestEnemy"]
+script = ExtResource("2_qn1rc")
+
+[node name="EnemyHealth" type="ProgressBar" parent="TestEnemy/Area3D"]
+offset_left = 58.0
+offset_top = 52.0
+offset_right = 1086.0
+offset_bottom = 93.0
+theme = SubResource("Theme_1n0d2")
+theme_override_styles/fill = SubResource("StyleBoxFlat_y5hus")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="TestEnemy/Area3D"]
-shape = SubResource("CapsuleShape3D_y5hus")
+shape = SubResource("CapsuleShape3D_oiuna")
 
+[node name="TestHitbox" type="RayCast3D" parent="TestEnemy/Area3D"]
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="TextEdit" type="TextEdit" parent="TestEnemy/Area3D"]
+offset_left = 541.0
+offset_top = 11.0
+offset_right = 620.0
+offset_bottom = 46.0
+theme = SubResource("Theme_y5hus")
+text = "BOSS"
+
+[connection signal="damage" from="Player" to="TestEnemy/Area3D" method="_on_player_damage"]
 [connection signal="area_entered" from="MeshInstance3D/Area3D" to="Player" method="_on_area_3d_area_entered"]

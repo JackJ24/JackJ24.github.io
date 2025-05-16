@@ -6,6 +6,7 @@ var SPEED = 2.0
 const JUMP_VELOCITY = 4.5
 var roll_magnitude = 30
 var can_attack = true
+signal damage(value)
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -19,6 +20,7 @@ func _physics_process(delta):
 	RotateChar()
 	move_and_slide()
 	light_attack()
+	heavy_attack()
 	
 func movement(delta):
 		# Add the gravity.
@@ -55,11 +57,23 @@ func set_health_bar():
 func light_attack():
 	#attack if button pressed and cooldown over
 	if Input.is_action_pressed("LightAttack") and can_attack:
-		print("hi")
 		can_attack = false
 		$Hitbox/attack_cooldown.start()
 		if $Hitbox.is_colliding():
-			print("hi")
+			print("hit")
+			emit_signal("damage", 50)
+	#when cooldown ends, allow attack
+	if $Hitbox/attack_cooldown.is_stopped():
+		can_attack = true
+		
+func heavy_attack():
+	#attack if button pressed and cooldown over
+	if Input.is_action_pressed("HeavyAttack") and can_attack:
+		can_attack = false
+		$Hitbox/attack_cooldown.start()
+		if $Hitbox.is_colliding():
+			print("hit")
+			emit_signal("damage", 125)
 	#when cooldown ends, allow attack
 	if $Hitbox/attack_cooldown.is_stopped():
 		can_attack = true
