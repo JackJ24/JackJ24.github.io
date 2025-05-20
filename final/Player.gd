@@ -23,13 +23,14 @@ func _physics_process(delta):
 	heavy_attack()
 	
 func movement(delta):
+	
 		# Add the gravity.
 	if not is_on_floor():
 		velocity.y -= gravity * delta
 
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
-	var input_dir = Input.get_vector("Left", "Right", "Forward", "Back")
+	var input_dir = Input.get_vector("Right", "Left", "Back", "Forward")
 	var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	if direction:
 		velocity.x = direction.x * SPEED
@@ -57,6 +58,7 @@ func set_health_bar():
 func light_attack():
 	#attack if button pressed and cooldown over
 	if Input.is_action_pressed("LightAttack") and can_attack:
+		
 		can_attack = false
 		$Hitbox/attack_cooldown.start()
 		if $Hitbox.is_colliding():

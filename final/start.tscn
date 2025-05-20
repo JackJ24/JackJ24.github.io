@@ -4,8 +4,11 @@
 [ext_resource type="Script" uid="uid://bg46yd6cua01x" path="res://test_enemy_script.gd" id="2_qn1rc"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_0q074"]
-sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
-ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+sky_top_color = Color(0.949897, 0.254048, 0.286602, 1)
+sky_horizon_color = Color(0.985905, 0.496455, 0.26709, 1)
+sky_curve = 0.0955921
+ground_bottom_color = Color(0.100316, 0.0812793, 0.0591645, 1)
+ground_horizon_color = Color(0.959724, 0.497001, 0.324255, 1)
 
 [sub_resource type="Sky" id="Sky_llwic"]
 sky_material = SubResource("ProceduralSkyMaterial_0q074")
@@ -34,6 +37,7 @@ var can_attack = true
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	
 	pass # Replace with function body.
 
 
