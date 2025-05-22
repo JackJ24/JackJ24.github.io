@@ -21,9 +21,9 @@ func _physics_process(delta):
 
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
-	var input_dir = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
+	var input_dir = Input.get_vector("Right", "Left", "Back", "Forward")
 	var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
-	anim_tree.set("parameters/IWR/blend_position", Vector2(vl.x, -vl.z) / speed)
+	anim_tree.set("parameters/Run, Walk, Idle/blend_position", Vector2(-velocity.x, velocity.z) / SPEED)
 	if direction:
 		velocity.x = direction.x * SPEED
 		velocity.z = direction.z * SPEED
@@ -32,3 +32,12 @@ func _physics_process(delta):
 		velocity.z = move_toward(velocity.z, 0, SPEED)
 
 	move_and_slide()
+	
+	var light_attacks = [     
+	"1h_slice_diagonal",
+	"1h_slice_horizontal",
+	"1h_attack_chop"]
+	var ComboCount = 0
+	var ComboTimeWindow = 0.5
+
+		
