@@ -6,11 +6,26 @@ extends CharacterBody3D
 @onready var anim_tree = $AnimationTree
 @onready var anim_state = $AnimationTree.get("parameters/playback")
 
+var attacks = [     
+	"1H_Melee_Attack_Slice_Diagonal",
+	"1H_Melee_Attack_Slice_Horizontal",
+	"1H_Melee_Attack_Chop"
+	]
+var LastAttack = 0
+var ComboCount = 0
+var ComboTimeWindow = 0.5
+var CanAttack = true
+
+
 const SPEED = 5.0
 const JUMP_VELOCITY = 4.5
 
 
 func _physics_process(delta):
+	
+	Attack()
+	
+	
 	# Add the gravity.
 	if not is_on_floor():
 		velocity += get_gravity() * delta
@@ -33,11 +48,39 @@ func _physics_process(delta):
 
 	move_and_slide()
 	
-	var light_attacks = [     
-	"1h_slice_diagonal",
-	"1h_slice_horizontal",
-	"1h_attack_chop"]
-	var ComboCount = 0
-	var ComboTimeWindow = 0.5
+	pass
+	
+
+func check_time_since_last_attack():
+	var thisAttack = Time.get_unix_time_from_system()
+	if thisAttack - LastAttack < ComboTimeWindow:
+		LastAttack = Time.get_unix_time_from_system()
+		return true
+	return false
+	
+func Attack():
+	print(ComboCount)
+	if Input.is_action_just_pressed("LightAttack"):
+		check_time_since_last_attack()
+		if true:
+			if ComboCount == 0:
+				anim_state.travel(attacks.get(0))
+				CanAttack = false
+				ComboCount += 1
+			if ComboCount == 1:
+				anim_state.travel(attacks.get(1))
+				CanAttack = false
+				ComboCount += 1
+			if ComboCount == 2:
+				anim_state.travel(attacks.get(2))
+				CanAttack = false
+				ComboCount += 1
+
+	if ComboCount == 3:
+		ComboCount = 0
+			
+		if false:
+			ComboCount = 0
+	CanAttack = true
 
 		
