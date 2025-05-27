@@ -8,12 +8,12 @@ extends CharacterBody3D
 
 var attacks = [     
 	"1H_Melee_Attack_Slice_Diagonal",
-	"1H_Melee_Attack_Slice_Horizontal",
+	"1H_Melee_Attack_Stab",
 	"1H_Melee_Attack_Chop"
 	]
-var LastAttack = 0
+var LastAttack = 99999999999999
 var ComboCount = 0
-var ComboTimeWindow = 0.5
+var ComboTimeWindow = 1.8
 var CanAttack = true
 
 
@@ -53,34 +53,39 @@ func _physics_process(delta):
 
 func check_time_since_last_attack():
 	var thisAttack = Time.get_unix_time_from_system()
+	print(thisAttack - LastAttack)
 	if thisAttack - LastAttack < ComboTimeWindow:
 		LastAttack = Time.get_unix_time_from_system()
 		return true
 	return false
 	
 func Attack():
-	print(ComboCount)
-	if Input.is_action_just_pressed("LightAttack"):
-		check_time_since_last_attack()
-		if true:
+	#print(ComboCount)
+	if Input.is_action_just_pressed("LightAttack") and $AttackCooldown.is_stopped():
+		print(check_time_since_last_attack())
+
+		if check_time_since_last_attack() == true:
 			if ComboCount == 0:
 				anim_state.travel(attacks.get(0))
-				CanAttack = false
 				ComboCount += 1
-			if ComboCount == 1:
+				$AttackCooldown.start()
+			elif ComboCount == 1:
 				anim_state.travel(attacks.get(1))
-				CanAttack = false
 				ComboCount += 1
-			if ComboCount == 2:
+				$AttackCooldown.start()
+			elif ComboCount == 2:
 				anim_state.travel(attacks.get(2))
-				CanAttack = false
 				ComboCount += 1
-
-	if ComboCount == 3:
-		ComboCount = 0
-			
-		if false:
+				$AttackCooldown.start()
+			elif ComboCount == 3:
+				ComboCount = 0
+				$AttackCooldown.start()
+		if check_time_since_last_attack() == false:
 			ComboCount = 0
-	CanAttack = true
+			LastAttack = 99999999999
+			$AttackCooldown.start()
+			
+
+
 
 		
