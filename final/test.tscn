@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://umhnle8fxpgw"]
+[gd_scene load_steps=12 format=3 uid="uid://umhnle8fxpgw"]
 
 [ext_resource type="PackedScene" uid="uid://lov5vry46ym0" path="res://testplayer.tscn" id="1_37kl0"]
+[ext_resource type="Script" uid="uid://bg46yd6cua01x" path="res://test_enemy_script.gd" id="2_8uh7m"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_8uh7m"]
 sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
@@ -15,6 +16,19 @@ sky = SubResource("Sky_6uqi0")
 tonemap_mode = 2
 glow_enabled = true
 
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_6uqi0"]
+
+[sub_resource type="Theme" id="Theme_ppyta"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ykrsh"]
+bg_color = Color(0.870387, 2.88785e-07, 1.2514e-06, 1)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_g14j6"]
+
+[sub_resource type="Theme" id="Theme_vbegm"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_ehkex"]
+
 [node name="test" type="Node3D"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -25,11 +39,47 @@ transform = Transform3D(-0.866025, -0.375056, 0.330656, 0, 0.661312, 0.750111, -
 light_color = Color(0.958231, 0.961752, 0.963696, 1)
 shadow_enabled = true
 
-[node name="CharacterBody3D" type="CharacterBody3D" parent="."]
-
 [node name="CSGBox3D" type="CSGBox3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.557005, -0.386719, -0.590703)
 use_collision = true
 size = Vector3(23.5479, 0.226563, 18.7686)
 
 [node name="Player" parent="." instance=ExtResource("1_37kl0")]
+
+[node name="TestEnemy" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -2.09871, 0.413155, 0)
+mesh = SubResource("CapsuleMesh_6uqi0")
+
+[node name="Area3D" type="Area3D" parent="TestEnemy"]
+script = ExtResource("2_8uh7m")
+
+[node name="EnemyHealth" type="ProgressBar" parent="TestEnemy/Area3D"]
+offset_left = 58.0
+offset_top = 52.0
+offset_right = 1086.0
+offset_bottom = 93.0
+theme = SubResource("Theme_ppyta")
+theme_override_styles/fill = SubResource("StyleBoxFlat_ykrsh")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TestEnemy/Area3D"]
+shape = SubResource("CapsuleShape3D_g14j6")
+
+[node name="TestHitbox" type="RayCast3D" parent="TestEnemy/Area3D"]
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="TextEdit" type="TextEdit" parent="TestEnemy/Area3D"]
+offset_left = 541.0
+offset_top = 11.0
+offset_right = 620.0
+offset_bottom = 46.0
+theme = SubResource("Theme_vbegm")
+text = "BOSS"
+
+[node name="Target" type="Area3D" parent="TestEnemy" groups=["Target"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.33981, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TestEnemy/Target"]
+shape = SubResource("SphereShape3D_ehkex")
+
+[connection signal="damage" from="Player" to="TestEnemy/Area3D" method="_on_player_damage"]

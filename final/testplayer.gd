@@ -5,6 +5,8 @@ extends CharacterBody3D
 @onready var model = $Rig
 @onready var anim_tree = $AnimationTree
 @onready var anim_state = $AnimationTree.get("parameters/playback")
+@onready var target = get_parent().get_node("TestEnemy/Target")
+
 
 var attacks = [     
 	"1H_Melee_Attack_Slice_Diagonal",
@@ -15,13 +17,15 @@ var LastAttack = 99999999999999
 var ComboCount = 0
 var ComboTimeWindow = 1.8
 var CanAttack = true
+signal damage(value)
 
 
-const SPEED = 5.0
+const SPEED = 2
 const JUMP_VELOCITY = 4.5
 
 
 func _physics_process(delta):
+	LockOnCamera()
 	
 	Attack()
 	
@@ -51,6 +55,7 @@ func _physics_process(delta):
 	pass
 	
 
+
 func check_time_since_last_attack():
 	var thisAttack = Time.get_unix_time_from_system()
 	print(thisAttack - LastAttack)
@@ -69,14 +74,23 @@ func Attack():
 				anim_state.travel(attacks.get(0))
 				ComboCount += 1
 				$AttackCooldown.start()
+				if $Hitbox.is_colliding():
+					print("hit")
+					emit_signal("damage", 50)
 			elif ComboCount == 1:
 				anim_state.travel(attacks.get(1))
 				ComboCount += 1
 				$AttackCooldown.start()
+				if $Hitbox.is_colliding():
+					print("hit")
+					emit_signal("damage", 50)
 			elif ComboCount == 2:
 				anim_state.travel(attacks.get(2))
 				ComboCount += 1
 				$AttackCooldown.start()
+				if $Hitbox.is_colliding():
+					print("hit")
+					emit_signal("damage", 100)
 			elif ComboCount == 3:
 				ComboCount = 0
 				$AttackCooldown.start()
@@ -85,7 +99,10 @@ func Attack():
 			LastAttack = 99999999999
 			$AttackCooldown.start()
 			
-
+func LockOnCamera():
+	look_at(target.global_position)
+	self.rotate_object_local(Vector3(0,1,0), 3.14)
+	
 
 
 		
