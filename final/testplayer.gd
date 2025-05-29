@@ -16,12 +16,14 @@ var attacks = [
 var LastAttack = 99999999999999
 var ComboCount = 0
 var ComboTimeWindow = 1.8
-var CanAttack = true
+var IsAttacking = false
 signal damage(value)
 
 
-const SPEED = 2
+var SPEED = 2
 const JUMP_VELOCITY = 4.5
+
+var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 
 func _physics_process(delta):
@@ -29,28 +31,29 @@ func _physics_process(delta):
 	
 	Attack()
 	
-	
-	# Add the gravity.
 	if not is_on_floor():
-		velocity += get_gravity() * delta
-
-	# Handle jump.
-	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
-		velocity.y = JUMP_VELOCITY
-
+		velocity.y -= gravity * delta
+	
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
-	var input_dir = Input.get_vector("Right", "Left", "Back", "Forward")
-	var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
-	anim_tree.set("parameters/Run, Walk, Idle/blend_position", Vector2(-velocity.x, velocity.z) / SPEED)
-	if direction:
-		velocity.x = direction.x * SPEED
-		velocity.z = direction.z * SPEED
-	else:
-		velocity.x = move_toward(velocity.x, 0, SPEED)
-		velocity.z = move_toward(velocity.z, 0, SPEED)
+	if IsAttacking == false:
+		var input_dir = Input.get_vector("Right", "Left", "Back", "Forward")
+		var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 
-	move_and_slide()
+		if direction:
+			velocity.x = direction.x * SPEED
+			velocity.z = direction.z * SPEED
+		else:
+			velocity.x = move_toward(velocity.x, 0, SPEED)
+			velocity.z = move_toward(velocity.z, 0, SPEED)
+			
+		if Input.is_action_just_pressed("Roll"):
+			roll()
+		#elif $Node2/RollWindow.is_stopped():
+			#anim_tree.set("parameters/Run, Walk, Idle/blend_position", Vector2(-velocity.x, velocity.z) / SPEED)
+			#SPEED = 2
+
+		move_and_slide()
 	
 	pass
 	
@@ -74,35 +77,53 @@ func Attack():
 				anim_state.travel(attacks.get(0))
 				ComboCount += 1
 				$AttackCooldown.start()
+				IsAttacking = true
 				if $Hitbox.is_colliding():
 					print("hit")
 					emit_signal("damage", 50)
+					
 			elif ComboCount == 1:
 				anim_state.travel(attacks.get(1))
 				ComboCount += 1
 				$AttackCooldown.start()
+				IsAttacking = true
 				if $Hitbox.is_colliding():
 					print("hit")
 					emit_signal("damage", 50)
+					
 			elif ComboCount == 2:
 				anim_state.travel(attacks.get(2))
 				ComboCount += 1
 				$AttackCooldown.start()
+				IsAttacking = true
 				if $Hitbox.is_colliding():
 					print("hit")
 					emit_signal("damage", 100)
+					
 			elif ComboCount == 3:
 				ComboCount = 0
 				$AttackCooldown.start()
+				
 		if check_time_since_last_attack() == false:
 			ComboCount = 0
 			LastAttack = 99999999999
 			$AttackCooldown.start()
-			
+			IsAttacking = false
+	IsAttacking = false
+
 func LockOnCamera():
 	look_at(target.global_position)
 	self.rotate_object_local(Vector3(0,1,0), 3.14)
-	
+
+func roll():
+	if $Node2/RollWindow.is_stopped():
+		SPEED = 5
+		$AnimationPlayer.play("Dodge_Forward")
+		$Node2/RollWindow.start()
+
+
+		
+		
 
 
 		
