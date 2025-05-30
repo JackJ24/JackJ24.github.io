@@ -13,6 +13,14 @@ var attacks = [
 	"1H_Melee_Attack_Stab",
 	"1H_Melee_Attack_Chop"
 	]
+var Dodge = [     
+	"Dodge_Forward",
+	"Dodge_Backward",
+	"Dodge_Left",
+	"Dodge_Right"
+
+	]
+	
 var LastAttack = 99999999999999
 var ComboCount = 0
 var ComboTimeWindow = 1.8
@@ -37,10 +45,11 @@ func _physics_process(delta):
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
 	if IsAttacking == false:
+		
 		var input_dir = Input.get_vector("Right", "Left", "Back", "Forward")
 		var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 
-		if direction:
+		if direction :
 			velocity.x = direction.x * SPEED
 			velocity.z = direction.z * SPEED
 		else:
@@ -49,9 +58,9 @@ func _physics_process(delta):
 			
 		if Input.is_action_just_pressed("Roll"):
 			roll()
-		#elif $Node2/RollWindow.is_stopped():
-			#anim_tree.set("parameters/Run, Walk, Idle/blend_position", Vector2(-velocity.x, velocity.z) / SPEED)
-			#SPEED = 2
+		elif $Node2/RollWindow.is_stopped():
+			anim_tree.set("parameters/Run, Walk, Idle/blend_position", Vector2(-velocity.x, velocity.z) / SPEED)
+			SPEED = 2
 
 		move_and_slide()
 	
@@ -68,6 +77,11 @@ func check_time_since_last_attack():
 	return false
 	
 func Attack():
+
+	if check_time_since_last_attack() == false:
+			ComboCount = 0
+
+		
 	#print(ComboCount)
 	if Input.is_action_just_pressed("LightAttack") and $AttackCooldown.is_stopped():
 		print(check_time_since_last_attack())
@@ -116,11 +130,11 @@ func LockOnCamera():
 	self.rotate_object_local(Vector3(0,1,0), 3.14)
 
 func roll():
-	if $Node2/RollWindow.is_stopped():
-		SPEED = 5
-		$AnimationPlayer.play("Dodge_Forward")
+	if $Node2/RollTimer.is_stopped():
+		anim_state.travel(Dodge.get(3))
+		SPEED = 2
 		$Node2/RollWindow.start()
-
+	
 
 		
 		
