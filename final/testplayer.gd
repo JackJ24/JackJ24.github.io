@@ -26,6 +26,10 @@ var ComboCount = 0
 var ComboTimeWindow = 1.8
 var IsAttacking = false
 signal damage(value)
+const MAX_HEALTH = 100
+var Health = MAX_HEALTH
+const MAX_STAMINA = 100
+var Stamina = MAX_STAMINA
 
 
 var SPEED = 2
@@ -33,10 +37,13 @@ const JUMP_VELOCITY = 4.5
 
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
+func _ready():
+	IntBars()
+	pass
 
 func _physics_process(delta):
 	LockOnCamera()
-	
+	SetBars()
 	Attack()
 	
 	if not is_on_floor():
@@ -78,20 +85,28 @@ func check_time_since_last_attack():
 	
 func Attack():
 
-	if check_time_since_last_attack() == false:
-			ComboCount = 0
+	print(IsAttacking)
+
+	if $Node2/CheckIfAttack.is_stopped():
+		LastAttack = 9999999999
+		IsAttacking = false
+		ComboCount = 0
+		RegenStamina()
+		
 
 		
-	#print(ComboCount)
-	if Input.is_action_just_pressed("LightAttack") and $AttackCooldown.is_stopped():
-		print(check_time_since_last_attack())
+	print(ComboCount)
+	if Input.is_action_just_pressed("LightAttack") and $AttackCooldown.is_stopped() and Stamina > 10:
+		#print(check_time_since_last_attack())
 
 		if check_time_since_last_attack() == true:
 			if ComboCount == 0:
 				anim_state.travel(attacks.get(0))
 				ComboCount += 1
 				$AttackCooldown.start()
+				$Node2/CheckIfAttack.start()
 				IsAttacking = true
+				Stamina -= 10
 				if $Hitbox.is_colliding():
 					print("hit")
 					emit_signal("damage", 50)
@@ -100,7 +115,9 @@ func Attack():
 				anim_state.travel(attacks.get(1))
 				ComboCount += 1
 				$AttackCooldown.start()
+				$Node2/CheckIfAttack.start()
 				IsAttacking = true
+				Stamina -= 10
 				if $Hitbox.is_colliding():
 					print("hit")
 					emit_signal("damage", 50)
@@ -109,7 +126,9 @@ func Attack():
 				anim_state.travel(attacks.get(2))
 				ComboCount += 1
 				$AttackCooldown.start()
+				$Node2/CheckIfAttack.start()
 				IsAttacking = true
+				Stamina -= 10
 				if $Hitbox.is_colliding():
 					print("hit")
 					emit_signal("damage", 100)
@@ -117,25 +136,53 @@ func Attack():
 			elif ComboCount == 3:
 				ComboCount = 0
 				$AttackCooldown.start()
-				
+
 		if check_time_since_last_attack() == false:
 			ComboCount = 0
 			LastAttack = 99999999999
 			$AttackCooldown.start()
+			$Node2/CheckIfAttack.start()
 			IsAttacking = false
-	IsAttacking = false
+
 
 func LockOnCamera():
 	look_at(target.global_position)
 	self.rotate_object_local(Vector3(0,1,0), 3.14)
 
 func roll():
-	if $Node2/RollTimer.is_stopped():
+	if $Node2/RollTimer.is_stopped and Stamina > 35:
 		anim_state.travel(Dodge.get(0))
 		SPEED = 5
+		Stamina -= 35
 		$Node2/RollWindow.start()
 		$Node2/RollTimer.start()
 	
+func SetBars():
+	SetStaminaBar()
+	SetHealthBar()
+	
+func IntBars():
+	IntHealthBar()
+	IntStaminaBar()
+	
+func IntHealthBar():
+	$Control/HealthBar.max_value = MAX_HEALTH
+	$Control/HealthBar.value = Health
+	
+func SetHealthBar():
+	$Control/HealthBar.value = Health
+	
+func IntStaminaBar():
+	$Control/StaminaBar.max_value = MAX_STAMINA
+	$Control/StaminaBar.value = Stamina
+	
+func SetStaminaBar():
+	$Control/StaminaBar.value = Stamina
+	
+func RegenStamina():
+	if Stamina < MAX_STAMINA:
+		Stamina += 0.05
+		print("regening")
 
 		
 		
