@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://umhnle8fxpgw"]
+[gd_scene load_steps=13 format=3 uid="uid://umhnle8fxpgw"]
 
 [ext_resource type="PackedScene" uid="uid://lov5vry46ym0" path="res://testplayer.tscn" id="1_37kl0"]
 [ext_resource type="Script" uid="uid://bg46yd6cua01x" path="res://test_enemy_script.gd" id="2_8uh7m"]
@@ -20,8 +20,13 @@ glow_enabled = true
 
 [sub_resource type="Theme" id="Theme_ppyta"]
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8uh7m"]
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ykrsh"]
 bg_color = Color(0.870387, 2.88785e-07, 1.2514e-06, 1)
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+shadow_size = 15
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_g14j6"]
 
@@ -59,6 +64,7 @@ offset_top = 52.0
 offset_right = 1086.0
 offset_bottom = 93.0
 theme = SubResource("Theme_ppyta")
+theme_override_styles/background = SubResource("StyleBoxEmpty_8uh7m")
 theme_override_styles/fill = SubResource("StyleBoxFlat_ykrsh")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="TestEnemy/Area3D"]

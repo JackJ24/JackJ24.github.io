@@ -30,6 +30,7 @@ const MAX_HEALTH = 100
 var Health = MAX_HEALTH
 const MAX_STAMINA = 100
 var Stamina = MAX_STAMINA
+var HealthPotion = 3
 
 
 var SPEED = 2
@@ -45,6 +46,7 @@ func _physics_process(delta):
 	LockOnCamera()
 	SetBars()
 	Attack()
+	RegenHealth()
 	
 	if not is_on_floor():
 		velocity.y -= gravity * delta
@@ -184,6 +186,13 @@ func RegenStamina():
 		Stamina += 0.05
 		print("regening")
 
+func RegenHealth():
+	$Control/HealthPotionIcon/PotionRemain.text = str(HealthPotion)
+	if Input.is_action_just_pressed("Heal") and Health < MAX_HEALTH and HealthPotion > 0:
+		Health += 50
+		HealthPotion -= 1
+		if Health > MAX_HEALTH:
+			Health = MAX_HEALTH
 		
 		
 
