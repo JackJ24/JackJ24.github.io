@@ -5,7 +5,7 @@ extends CharacterBody3D
 @onready var model = $Rig
 @onready var anim_tree = $AnimationTree
 @onready var anim_state = $AnimationTree.get("parameters/playback")
-@onready var target = get_parent().get_node("TestEnemy/Target")
+@onready var target = get_parent().get_node("Skeleton_Golem/Target")
 
 
 var attacks = [     
