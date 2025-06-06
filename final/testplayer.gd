@@ -79,7 +79,7 @@ func _physics_process(delta):
 
 func check_time_since_last_attack():
 	var thisAttack = Time.get_unix_time_from_system()
-	print(thisAttack - LastAttack)
+	#print(thisAttack - LastAttack)
 	if thisAttack - LastAttack < ComboTimeWindow:
 		LastAttack = Time.get_unix_time_from_system()
 		return true
@@ -87,7 +87,7 @@ func check_time_since_last_attack():
 	
 func Attack():
 
-	print(IsAttacking)
+	#print(IsAttacking)
 
 	if $Node2/CheckIfAttack.is_stopped():
 		LastAttack = 9999999999
@@ -97,7 +97,7 @@ func Attack():
 		
 
 		
-	print(ComboCount)
+	#print(ComboCount)
 	if Input.is_action_just_pressed("LightAttack") and $AttackCooldown.is_stopped() and Stamina > 10:
 		#print(check_time_since_last_attack())
 
@@ -110,7 +110,7 @@ func Attack():
 				IsAttacking = true
 				Stamina -= 10
 				if $Hitbox.is_colliding():
-					print("hit")
+					#print("hit")
 					emit_signal("damage", 50)
 					
 			elif ComboCount == 1:
@@ -121,7 +121,7 @@ func Attack():
 				IsAttacking = true
 				Stamina -= 10
 				if $Hitbox.is_colliding():
-					print("hit")
+					#print("hit")
 					emit_signal("damage", 50)
 					
 			elif ComboCount == 2:
@@ -132,7 +132,7 @@ func Attack():
 				IsAttacking = true
 				Stamina -= 10
 				if $Hitbox.is_colliding():
-					print("hit")
+					#print("hit")
 					emit_signal("damage", 100)
 					
 			elif ComboCount == 3:
@@ -184,7 +184,7 @@ func SetStaminaBar():
 func RegenStamina():
 	if Stamina < MAX_STAMINA:
 		Stamina += 0.05
-		print("regening")
+		#print("regening")
 
 func RegenHealth():
 	$Control/HealthPotionIcon/PotionRemain.text = str(HealthPotion)
@@ -198,3 +198,8 @@ func RegenHealth():
 
 
 		
+
+
+func _on_skeleton_golem_e_damage(value: Variant) -> void:
+	Health - value
+	pass # Replace with function body.
