@@ -2,15 +2,15 @@ extends State
 class_name EnemyAttack
 
 var Hitbox = ShapeCast3D
-@export var anim_tree = AnimationTree
+@export var anim_tree : AnimationTree
 @onready var anim_state = anim_tree["parameters/playback"]
 @export var enemy : CharacterBody3D
 signal hit()
 
 func Enter():
 	Hitbox = get_tree().get_first_node_in_group("AttackHitbox")
-	print("rtrrrr")
 	Attack()
+	
 	pass
 	
 func Exit():
@@ -23,6 +23,7 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+	Transitioned.emit(self, "Retreat")
 	pass
 
 
@@ -32,3 +33,4 @@ func Attack():
 	if Hitbox.is_colliding():
 		print("hit")
 		emit_signal("hit")
+	
