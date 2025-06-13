@@ -156,7 +156,7 @@ func LockOnCamera():
 func roll():
 	if $Node2/RollTimer.is_stopped and Stamina > 35:
 		anim_state.travel(Dodge.get(0))
-		SPEED = 5
+		SPEED = 7
 		Stamina -= 35
 		$Area3D/CollisionShape3D.disabled = true
 

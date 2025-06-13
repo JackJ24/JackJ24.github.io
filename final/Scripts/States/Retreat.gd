@@ -34,5 +34,5 @@ func Physics_Update(delta: float):
 	else:
 		enemy.velocity = Vector3()
 		
-	if direction.length() > 10 or cooldown.is_stopped():
+	if direction.length() > 15 or cooldown.is_stopped():
 		Transitioned.emit(self, "Follow")
