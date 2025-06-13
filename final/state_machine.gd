@@ -22,7 +22,7 @@ func _ready():
 func _process(delta):
 	
 	if current_state:
-		current_state._process(delta)
+		current_state.Physics_Update(delta)
 	pass
 	
 func on_child_transition(state, new_state_name):

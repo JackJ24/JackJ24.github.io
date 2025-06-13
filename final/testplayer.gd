@@ -47,6 +47,7 @@ func _physics_process(delta):
 	SetBars()
 	Attack()
 	RegenHealth()
+	death()
 	
 	if not is_on_floor():
 		velocity.y -= gravity * delta
@@ -69,6 +70,7 @@ func _physics_process(delta):
 			roll()
 		elif $Node2/RollWindow.is_stopped():
 			anim_tree.set("parameters/Run, Walk, Idle/blend_position", Vector2(-velocity.x, velocity.z) / SPEED)
+			$Area3D/CollisionShape3D.disabled = false
 			SPEED = 2
 
 		move_and_slide()
@@ -156,6 +158,8 @@ func roll():
 		anim_state.travel(Dodge.get(0))
 		SPEED = 5
 		Stamina -= 35
+		$Area3D/CollisionShape3D.disabled = true
+
 		$Node2/RollWindow.start()
 		$Node2/RollTimer.start()
 	
@@ -183,7 +187,7 @@ func SetStaminaBar():
 	
 func RegenStamina():
 	if Stamina < MAX_STAMINA:
-		Stamina += 0.05
+		Stamina += 0.40
 		#print("regening")
 
 func RegenHealth():
@@ -195,11 +199,15 @@ func RegenHealth():
 			Health = MAX_HEALTH
 		
 		
-
+func death():
+	if (Health <= 0):
+		get_tree().quit()
 
 		
 
 
 func _on_skeleton_golem_e_damage(value: Variant) -> void:
-	Health - value
+	if( $Area3D/CollisionShape3D.disabled == false):
+		print("real hit")
+		Health = Health - value
 	pass # Replace with function body.

@@ -23,15 +23,15 @@ func _ready():
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func Physics_Update(delta: float):
 
 	var direction = player.global_position - enemy.global_position
 	
-	if direction.length() > 5:
+	if direction.length() > 3:
 		enemy.velocity = direction.normalized() * move_speed
 
 	else:
 		enemy.velocity = Vector3()
 		
-	if direction.length() < 5:
+	if direction.length() < 3:
 		Transitioned.emit(self, "attack")
