@@ -1,0 +1,42 @@
+[gd_scene load_steps=2 format=3 uid="uid://d0mw2y7l4kxh"]
+
+[ext_resource type="Script" uid="uid://d2hwqeflgioq2" path="res://controls.gd" id="1_gpdjo"]
+
+[node name="Controls" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_gpdjo")
+
+[node name="TextEdit" type="TextEdit" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "WASD - Movement
+C - Dodge
+E - Heal
+Left Click - Attack
+
+Tips:
+-When The Boss Attacks, Wait For The End Of The Attack Then Dodge. Doing That Will Avoid Damage."
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -77.0
+offset_top = 27.0
+offset_right = -32.0
+offset_bottom = 58.0
+grow_horizontal = 0
+text = "Back
+"
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

@@ -73,6 +73,7 @@ func _physics_process(delta):
 			$Area3D/CollisionShape3D.disabled = false
 			SPEED = 2
 
+
 		move_and_slide()
 	
 	pass
@@ -87,66 +88,55 @@ func check_time_since_last_attack():
 		return true
 	return false
 	
+	
 func Attack():
-
-	#print(IsAttacking)
-
 	if $Node2/CheckIfAttack.is_stopped():
-		LastAttack = 9999999999
-		IsAttacking = false
 		ComboCount = 0
+		IsAttacking = false
 		RegenStamina()
-		
 
-		
-	#print(ComboCount)
-	if Input.is_action_just_pressed("LightAttack") and $AttackCooldown.is_stopped() and Stamina > 10:
-		#print(check_time_since_last_attack())
-
-		if check_time_since_last_attack() == true:
-			if ComboCount == 0:
-				anim_state.travel(attacks.get(0))
-				ComboCount += 1
-				$AttackCooldown.start()
-				$Node2/CheckIfAttack.start()
-				IsAttacking = true
-				Stamina -= 10
-				if $Hitbox.is_colliding():
-					#print("hit")
-					emit_signal("damage", 50)
-					
-			elif ComboCount == 1:
-				anim_state.travel(attacks.get(1))
-				ComboCount += 1
-				$AttackCooldown.start()
-				$Node2/CheckIfAttack.start()
-				IsAttacking = true
-				Stamina -= 10
-				if $Hitbox.is_colliding():
-					#print("hit")
-					emit_signal("damage", 50)
-					
-			elif ComboCount == 2:
-				anim_state.travel(attacks.get(2))
-				ComboCount += 1
-				$AttackCooldown.start()
-				$Node2/CheckIfAttack.start()
-				IsAttacking = true
-				Stamina -= 10
-				if $Hitbox.is_colliding():
-					#print("hit")
-					emit_signal("damage", 100)
-					
-			elif ComboCount == 3:
-				ComboCount = 0
-				$AttackCooldown.start()
-
-		if check_time_since_last_attack() == false:
-			ComboCount = 0
-			LastAttack = 99999999999
-			$AttackCooldown.start()
+	if Input.is_action_just_pressed("LightAttack") and $Node2/AttackCooldown.is_stopped() and $Node2/CheckNextAttack.is_stopped():
+		$Node2/CheckIfAttack.start()
+		if ComboCount == 0 and not $Node2/CheckIfAttack.is_stopped():
+			anim_state.travel(attacks.get(0))
+			ComboCount += 1
+			$Node2/CheckNextAttack.start()
 			$Node2/CheckIfAttack.start()
+			IsAttacking = true
+			Stamina -= 10
+			if $Hitbox.is_colliding():
+				#print("hit")
+				emit_signal("damage", 50)
+					
+		elif ComboCount == 1 and not $Node2/CheckIfAttack.is_stopped():
+			anim_state.travel(attacks.get(1))
+			ComboCount += 1
+			$Node2/CheckNextAttack.start()
+			$Node2/CheckIfAttack.start()
+			IsAttacking = true
+			Stamina -= 10
+			if $Hitbox.is_colliding():
+				#print("hit")
+				emit_signal("damage", 50)
+
+		elif ComboCount == 2 and not $Node2/CheckIfAttack.is_stopped():
+			anim_state.travel(attacks.get(2))
+			ComboCount += 1
+			$Node2/CheckNextAttack.start()
+			$Node2/CheckIfAttack.start()
+			IsAttacking = true
+			Stamina -= 10
+			if $Hitbox.is_colliding():
+				#print("hit")
+				emit_signal("damage", 100)
+					
+		elif ComboCount == 3 and not $Node2/CheckIfAttack.is_stopped():
+			ComboCount = 0
 			IsAttacking = false
+			$Node2/AttackCooldown.start()
+
+
+
 
 
 func LockOnCamera():
@@ -172,18 +162,18 @@ func IntBars():
 	IntStaminaBar()
 	
 func IntHealthBar():
-	$Control/HealthBar.max_value = MAX_HEALTH
-	$Control/HealthBar.value = Health
+	$Ui/HealthBar.max_value = MAX_HEALTH
+	$Ui/HealthBar.value = Health
 	
 func SetHealthBar():
-	$Control/HealthBar.value = Health
+	$Ui/HealthBar.value = Health
 	
 func IntStaminaBar():
-	$Control/StaminaBar.max_value = MAX_STAMINA
-	$Control/StaminaBar.value = Stamina
+	$Ui/StaminaBar.max_value = MAX_STAMINA
+	$Ui/StaminaBar.value = Stamina
 	
 func SetStaminaBar():
-	$Control/StaminaBar.value = Stamina
+	$Ui/StaminaBar.value = Stamina
 	
 func RegenStamina():
 	if Stamina < MAX_STAMINA:
@@ -191,8 +181,9 @@ func RegenStamina():
 		#print("regening")
 
 func RegenHealth():
-	$Control/HealthPotionIcon/PotionRemain.text = str(HealthPotion)
+	$Ui/HealthPotionIcon/PotionRemain.text = str(HealthPotion)
 	if Input.is_action_just_pressed("Heal") and Health < MAX_HEALTH and HealthPotion > 0:
+		$Audio/Heal.play()
 		Health += 50
 		HealthPotion -= 1
 		if Health > MAX_HEALTH:
@@ -201,13 +192,15 @@ func RegenHealth():
 		
 func death():
 	if (Health <= 0):
-		get_tree().quit()
+		get_tree().change_scene_to_file("res://death.tscn")
 
 		
 
 
 func _on_skeleton_golem_e_damage(value: Variant) -> void:
-	if( $Area3D/CollisionShape3D.disabled == false):
+
+	if($Area3D/CollisionShape3D.disabled == false):
+		$Audio/Hurt.play()
 		print("real hit")
 		Health = Health - value
 	pass # Replace with function body.

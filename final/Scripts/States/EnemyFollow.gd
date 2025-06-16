@@ -26,7 +26,7 @@ func _ready():
 func Physics_Update(delta: float):
 
 	var direction = player.global_position - enemy.global_position
-	
+
 	if direction.length() > 3:
 		enemy.velocity = direction.normalized() * move_speed
 
