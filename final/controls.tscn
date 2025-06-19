@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://d0mw2y7l4kxh"]
+[gd_scene load_steps=3 format=3 uid="uid://d0mw2y7l4kxh"]
 
 [ext_resource type="Script" uid="uid://d2hwqeflgioq2" path="res://controls.gd" id="1_gpdjo"]
+[ext_resource type="AudioStream" uid="uid://dj2ei1g5e7dr" path="res://Assets/Wii Shop Channel Main Theme (HQ).wav" id="2_qo8cm"]
 
 [node name="Controls" type="Control"]
 layout_mode = 3
@@ -38,5 +39,10 @@ offset_bottom = 58.0
 grow_horizontal = 0
 text = "Back
 "
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_qo8cm")
+volume_db = -8.33
+autoplay = true
 
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
