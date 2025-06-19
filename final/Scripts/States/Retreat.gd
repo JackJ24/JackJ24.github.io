@@ -24,6 +24,8 @@ func _ready():
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
+#walks away from player.
+#changes state once a certain time has passed or is a distance away
 func Physics_Update(delta: float):
 	player = get_tree().get_first_node_in_group("Player")
 	var direction = player.global_position - enemy.global_position

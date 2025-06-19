@@ -1,11 +1,12 @@
 extends CharacterBody3D
 class_name enemy
 
+#Vars
 signal EDamage(value)
 @export var anim_tree: AnimationTree
 var player : CharacterBody3D
 var move_speed =1 
-var MaxHealth = 1000
+var MaxHealth = 1
 var Health = MaxHealth
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
@@ -15,7 +16,9 @@ func _ready():
 	player = get_tree().get_first_node_in_group("Player")
 	pass # Replace with function body.
 
-
+func Win():
+	if (Health <= 0):
+		get_tree().change_scene_to_file("res://win.tscn")
 
 	
 
@@ -26,12 +29,14 @@ func _process(_delta):
 		velocity.y -= gravity * _delta
 	move_and_slide()
 	HealthBar()
+	Win()
 
 	
 	
 	
 
-
+#uses self position and player pos to find direction of player
+#Rotates to player
 func chase_target(target):
 	
 	anim_tree.set("parameters/Run,Idle/blend_position", 0.3)
@@ -46,11 +51,12 @@ func chase_target(target):
 	#look_at(target.global_position)
 	#self.rotate_object_local(Vector3(0,1,0), 3.14)
 
-
+#
 func _on_attack_hit() -> void:
-	emit_signal("EDamage", 20)
+	emit_signal("EDamage", 40)
 	pass # Replace with function body.
 
+#Health Bar Setup
 func SetHealth():
 	Health = MaxHealth
 	$EnemyHealth.max_value = MaxHealth
@@ -59,7 +65,7 @@ func SetHealth():
 func HealthBar():
 	$EnemyHealth.value = Health
 	
-
+#Hit from player
 func _on_player_damage(value: Variant) -> void:
 	$audio/Hit.play()
 	Health = Health - value

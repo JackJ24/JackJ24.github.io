@@ -1,24 +1,24 @@
-[gd_scene load_steps=7 format=3 uid="uid://dnnkhoutg3pu0"]
+[gd_scene load_steps=7 format=3 uid="uid://c44xy4u422ybl"]
 
-[ext_resource type="Script" uid="uid://byd0r7unvrtga" path="res://death.gd" id="1_lf77f"]
-[ext_resource type="FontFile" uid="uid://yxiqm2pjhpb4" path="res://Assets/OptimusPrinceps.ttf" id="2_531me"]
-[ext_resource type="AudioStream" uid="uid://cqufs5ruv64e0" path="res://Assets/dark-souls-you-died-sound-effect_hm5sYFG.mp3" id="3_531me"]
+[ext_resource type="Script" uid="uid://bu81sjdxyr0q7" path="res://win.gd" id="1_hgi8f"]
+[ext_resource type="FontFile" uid="uid://yxiqm2pjhpb4" path="res://Assets/OptimusPrinceps.ttf" id="1_wao2c"]
+[ext_resource type="AudioStream" uid="uid://bllcouyrvxvwr" path="res://Assets/Queen - We Are The Champions (Official Video) (1).mp3" id="3_tmki8"]
 
-[sub_resource type="Theme" id="Theme_4868a"]
+[sub_resource type="Theme" id="Theme_hgi8f"]
 
-[sub_resource type="FontVariation" id="FontVariation_f0m10"]
-base_font = ExtResource("2_531me")
+[sub_resource type="FontVariation" id="FontVariation_tmki8"]
+base_font = ExtResource("1_wao2c")
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wmr2h"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_yblwc"]
 
-[node name="Death" type="Control"]
+[node name="win" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_lf77f")
+script = ExtResource("1_hgi8f")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 1
@@ -65,17 +65,18 @@ offset_right = 65.5
 offset_bottom = 11.5
 grow_horizontal = 2
 grow_vertical = 2
-theme = SubResource("Theme_4868a")
-theme_override_colors/font_color = Color(0.67, 0, 0.0893333, 1)
-theme_override_fonts/font = SubResource("FontVariation_f0m10")
+theme = SubResource("Theme_hgi8f")
+theme_override_colors/font_color = Color(0.833812, 0.591571, 0.0619504, 1)
+theme_override_fonts/font = SubResource("FontVariation_tmki8")
 theme_override_font_sizes/font_size = 100
-theme_override_styles/normal = SubResource("StyleBoxEmpty_wmr2h")
-text = "YOU DIED"
+theme_override_styles/normal = SubResource("StyleBoxEmpty_yblwc")
+text = "YOU WIN"
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("3_531me")
-volume_db = -20.89
+stream = ExtResource("3_tmki8")
+volume_db = -4.455
 autoplay = true
+parameters/looping = true
 
 [connection signal="pressed" from="VBoxContainer2/RestartButton" to="." method="_on_restart_button_pressed"]
 [connection signal="pressed" from="VBoxContainer2/QuitButton" to="." method="_on_quit_button_pressed"]

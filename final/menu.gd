@@ -1,5 +1,5 @@
 extends Control
-
+#Buttons used to change scene to other scene
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

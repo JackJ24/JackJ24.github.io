@@ -1,18 +1,20 @@
 extends CharacterBody3D
 
-
+#varibles
 @onready var spring_arm = $SpringArm3D
 @onready var model = $Rig
 @onready var anim_tree = $AnimationTree
 @onready var anim_state = $AnimationTree.get("parameters/playback")
 @onready var target = get_parent().get_node("Skeleton_Golem/Target")
 
-
+#Attk Animations
 var attacks = [     
 	"1H_Melee_Attack_Slice_Diagonal",
 	"1H_Melee_Attack_Stab",
 	"1H_Melee_Attack_Chop"
 	]
+
+#Dodge Animations
 var Dodge = [     
 	"Dodge_Forward",
 	"Dodge_Backward",
@@ -20,7 +22,7 @@ var Dodge = [
 	"Dodge_Right"
 
 	]
-	
+#Vars and Const
 var LastAttack = 99999999999999
 var ComboCount = 0
 var ComboTimeWindow = 1.8
@@ -31,11 +33,9 @@ var Health = MAX_HEALTH
 const MAX_STAMINA = 100
 var Stamina = MAX_STAMINA
 var HealthPotion = 3
-
-
 var SPEED = 2
 const JUMP_VELOCITY = 4.5
-
+#Gravity
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 func _ready():
@@ -47,8 +47,14 @@ func _physics_process(delta):
 	SetBars()
 	Attack()
 	RegenHealth()
-	death()
+	Death()
+	Move(delta)
+
 	
+	pass
+	
+#Movement for the player, also includes gravity
+func Move(delta):
 	if not is_on_floor():
 		velocity.y -= gravity * delta
 	
@@ -75,20 +81,23 @@ func _physics_process(delta):
 
 
 		move_and_slide()
-	
-	pass
-	
 
 
-func check_time_since_last_attack():
-	var thisAttack = Time.get_unix_time_from_system()
-	#print(thisAttack - LastAttack)
-	if thisAttack - LastAttack < ComboTimeWindow:
-		LastAttack = Time.get_unix_time_from_system()
-		return true
-	return false
+#func check_time_since_last_attack():
+#	var thisAttack = Time.get_unix_time_from_system()
+#	#print(thisAttack - LastAttack)
+#	if thisAttack - LastAttack < ComboTimeWindow:
+#		LastAttack = Time.get_unix_time_from_system()
+#		return true
+#	return false
 	
-	
+
+# Attacks from the player.
+# It uses a 3 hit combo, so if the player keeps pressing
+# the attack button it will cycle through the attacks.
+# If the player stops pressing the attack button, it
+# resets the combo to the start
+#This is done by checking inputs, and timers
 func Attack():
 	if $Node2/CheckIfAttack.is_stopped():
 		ComboCount = 0
@@ -135,14 +144,12 @@ func Attack():
 			IsAttacking = false
 			$Node2/AttackCooldown.start()
 
-
-
-
-
+#The lock on camera uses the look at function
 func LockOnCamera():
 	look_at(target.global_position)
 	self.rotate_object_local(Vector3(0,1,0), 3.14)
 
+#Dodge. Disables the collision during dodge
 func roll():
 	if $Node2/RollTimer.is_stopped and Stamina > 35:
 		anim_state.travel(Dodge.get(0))
@@ -153,6 +160,8 @@ func roll():
 		$Node2/RollWindow.start()
 		$Node2/RollTimer.start()
 	
+	
+#Set health and stamina
 func SetBars():
 	SetStaminaBar()
 	SetHealthBar()
@@ -190,13 +199,16 @@ func RegenHealth():
 			Health = MAX_HEALTH
 		
 		
-func death():
+		
+#When player dies, changes to death scene
+func Death():
 	if (Health <= 0):
 		get_tree().change_scene_to_file("res://death.tscn")
 
 		
 
-
+#signal when the player gets hit
+#damage player.
 func _on_skeleton_golem_e_damage(value: Variant) -> void:
 
 	if($Area3D/CollisionShape3D.disabled == false):

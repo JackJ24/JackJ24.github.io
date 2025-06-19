@@ -3,7 +3,7 @@ class_name EnemyFollow
 
 
 
-
+#vars
 @export var enemy: CharacterBody3D
 @export var move_speed := 1
 var player : CharacterBody3D
@@ -23,6 +23,8 @@ func _ready():
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
+#if player is far it walks to player.
+#When close to playyer state is changed to attack
 func Physics_Update(delta: float):
 
 	var direction = player.global_position - enemy.global_position

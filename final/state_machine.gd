@@ -1,7 +1,15 @@
 extends Node
 
-@export var initial_state : State
 
+#################################################################
+#This is a state machine
+#It works by creating states for the character
+# and then setting a state via startup, and the the signal transitioned.
+# When a state is currently active it only uses code from that state.
+######################################################################
+
+#Vars
+@export var initial_state : State
 var current_state : State
 var states : Dictionary = {}
 
@@ -19,12 +27,14 @@ func _ready():
 		current_state = initial_state
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
+#States code
 func _process(delta):
 	
 	if current_state:
 		current_state.Physics_Update(delta)
 	pass
 	
+	#set currrent state var
 func on_child_transition(state, new_state_name):
 	if state != current_state:
 		return

@@ -1,6 +1,7 @@
 extends State
 class_name EnemyAttack
 
+#var
 var Hitbox = ShapeCast3D
 @export var anim_tree : AnimationTree
 @onready var anim_state = anim_tree["parameters/playback"]
@@ -26,6 +27,8 @@ func _ready() -> void:
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
+#waits a bit to check if player is in attack hitbox
+#once attacks are done it sets the state to retreat
 func Physics_Update(delta: float) -> void:
 
 	if Hitbox.is_colliding and Attack1Cool.is_stopped() and AttackNum == 1:
@@ -45,7 +48,7 @@ func Physics_Update(delta: float) -> void:
 	
 	pass
 
-
+#Attack1
 func Attack1():
 	print("im here")
 	anim_state.travel("Dualwield_Melee_Attack_Slice")
@@ -53,8 +56,8 @@ func Attack1():
 	AttackNum = AttackNum + 1
 
 
-
-
+#Attack2
+#chance for attack 2 to happen
 func Attack2():
 	if randf_range(0, 100) > 1:
 		anim_state.travel("Dualwield_Melee_Attack_Chop")
