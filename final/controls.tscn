@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://d0mw2y7l4kxh"]
 
-[ext_resource type="Script" uid="uid://d2hwqeflgioq2" path="res://controls.gd" id="1_gpdjo"]
-[ext_resource type="AudioStream" uid="uid://dj2ei1g5e7dr" path="res://Assets/Wii Shop Channel Main Theme (HQ).wav" id="2_qo8cm"]
+[ext_resource type="Script" uid="uid://d2hwqeflgioq2" path="res://Scripts/controls.gd" id="1_gpdjo"]
+[ext_resource type="AudioStream" uid="uid://b1dhwqc4jwn7s" path="res://Assets/Wii Shop Channel Main Theme (HQ).mp3" id="2_qo8cm"]
 
 [node name="Controls" type="Control"]
 layout_mode = 3

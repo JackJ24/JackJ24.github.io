@@ -1,7 +1,7 @@
 [gd_scene load_steps=21 format=3 uid="uid://7rb6p20bdxnv"]
 
-[ext_resource type="Script" uid="uid://deedu0habkhgw" path="res://Player.gd" id="1_qyq0o"]
-[ext_resource type="Script" uid="uid://bg46yd6cua01x" path="res://test_enemy_script.gd" id="2_qn1rc"]
+[ext_resource type="Script" uid="uid://deedu0habkhgw" path="res://Scripts/Player.gd" id="1_qyq0o"]
+[ext_resource type="Script" uid="uid://bg46yd6cua01x" path="res://Scripts/test_enemy_script.gd" id="2_qn1rc"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_0q074"]
 sky_top_color = Color(0.949897, 0.254048, 0.286602, 1)

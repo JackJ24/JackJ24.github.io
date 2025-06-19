@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://dnnkhoutg3pu0"]
 
-[ext_resource type="Script" uid="uid://byd0r7unvrtga" path="res://death.gd" id="1_lf77f"]
+[ext_resource type="Script" uid="uid://byd0r7unvrtga" path="res://Scripts/death.gd" id="1_lf77f"]
 [ext_resource type="FontFile" uid="uid://yxiqm2pjhpb4" path="res://Assets/OptimusPrinceps.ttf" id="2_531me"]
 [ext_resource type="AudioStream" uid="uid://cqufs5ruv64e0" path="res://Assets/dark-souls-you-died-sound-effect_hm5sYFG.mp3" id="3_531me"]
 

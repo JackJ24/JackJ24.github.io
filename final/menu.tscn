@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://b3y61vahtat7v"]
 
-[ext_resource type="Script" uid="uid://b18hlv62fhf78" path="res://menu.gd" id="1_lti8b"]
+[ext_resource type="Script" uid="uid://b18hlv62fhf78" path="res://Scripts/menu.gd" id="1_lti8b"]
 [ext_resource type="Texture2D" uid="uid://v7f2uexleajf" path="res://Assets/Capstone Sonte.png" id="2_4hy44"]
 [ext_resource type="FontFile" uid="uid://yxiqm2pjhpb4" path="res://Assets/OptimusPrinceps.ttf" id="2_ouk20"]
 [ext_resource type="AudioStream" uid="uid://flxlivwsvnxe" path="res://Assets/Dark Souls 3 main menu theme (Game Soundtrack) (Acappella) (feat. Oksana Shishenina).mp3" id="4_4hy44"]
@@ -40,9 +40,9 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -20.0
+offset_left = 11.0
 offset_top = -20.0
-offset_right = 20.0
+offset_right = 51.0
 offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2

@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://c44xy4u422ybl"]
 
-[ext_resource type="Script" uid="uid://bu81sjdxyr0q7" path="res://win.gd" id="1_hgi8f"]
+[ext_resource type="Script" uid="uid://bu81sjdxyr0q7" path="res://Scripts/win.gd" id="1_hgi8f"]
 [ext_resource type="FontFile" uid="uid://yxiqm2pjhpb4" path="res://Assets/OptimusPrinceps.ttf" id="1_wao2c"]
 [ext_resource type="AudioStream" uid="uid://bllcouyrvxvwr" path="res://Assets/Queen - We Are The Champions (Official Video) (1).mp3" id="3_tmki8"]
 

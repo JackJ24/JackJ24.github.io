@@ -25,7 +25,7 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #if player is far it walks to player.
 #When close to playyer state is changed to attack
-func Physics_Update(delta: float):
+func Physics_Update(_delta: float):
 
 	var direction = player.global_position - enemy.global_position
 
